@@ -2,15 +2,24 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
-      <div>🛍️ Siconex</div>
+    <>
+      {/* TOP HEADER */}
+      <nav className="navbar">
+        <div className="left">
+          <span className="menu">☰</span>
+          <span className="logo">SICONEX</span>
+        </div>
 
-      <input className="search" placeholder="Search..." />
+        <div className="right">
+          <Link href="/account">👤</Link>
+          <Link href="/cart">🛒</Link>
+        </div>
+      </nav>
 
-      <div className="nav-links">
-        <Link href="/">Home</Link>
-        <Link href="/cart">Cart</Link>
+      {/* SEARCH BAR */}
+      <div className="search-container">
+        <input placeholder="Search products..." />
       </div>
-    </nav>
+    </>
   );
 }
