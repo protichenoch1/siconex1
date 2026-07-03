@@ -9,6 +9,13 @@ export default function Home() {
         <h2>🔥 Big Deals Today</h2>
       </div>
 
+  <div className="categories">
+  <div>📱 Phones</div>
+  <div>📺 TVs</div>
+  <div>💻 Laptops</div>
+  <div>🔋 Power</div>
+</div>
+
       {/* PRODUCTS */}
       <div className="grid">
         <ProductCard 
