@@ -7,9 +7,9 @@ export default function Home() {
       {/* BANNER */}
       <div class="slider">
   <div class="slides">
-    <img src="/banner1.jpg" />
-    <img src="/banner2.jpg" />
-    <img src="/banner3.jpg" />
+    <img src="/slide.jpg" />
+    <img src="/slide1.jpg" />
+    <img src="/slide2.jpg" />
   </div>
 </div>
 
