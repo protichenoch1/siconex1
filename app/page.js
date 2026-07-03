@@ -20,6 +20,10 @@ export default function Home() {
   <div>🔋 Power</div>
 </div>
 
+  <div class="hot-deals">
+   Hot Deals
+</div>
+
       {/* PRODUCTS */}
       <div className="grid">
         <ProductCard 
