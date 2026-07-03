@@ -3,13 +3,33 @@ import ProductCard from "../components/ProductCard";
 export default function Home() {
   return (
     <main className="container">
-      <h1>Welcome to Siconex</h1>
 
-      <div className="grid">
-        <ProductCard name="iPhone 13" price="$800" />
-        <ProductCard name="Samsung TV" price="$600" />
-        <ProductCard name="Powerbank" price="$50" />
+      {/* BANNER */}
+      <div className="banner">
+        <h2>🔥 Big Deals Today</h2>
       </div>
+
+      {/* PRODUCTS */}
+      <div className="grid">
+        <ProductCard 
+          name="iPhone 13" 
+          price="$800" 
+          image="https://via.placeholder.com/150"
+        />
+
+        <ProductCard 
+          name="Samsung TV" 
+          price="$600" 
+          image="https://via.placeholder.com/150"
+        />
+
+        <ProductCard 
+          name="Powerbank" 
+          price="$50" 
+          image="https://via.placeholder.com/150"
+        />
+      </div>
+
     </main>
   );
 }
