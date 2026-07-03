@@ -262,3 +262,28 @@ body {
   font-size: 16px;             /* slightly smaller */
   font-weight: bold;
 }
+
+/* HOT DEALS TITLE */
+.hot-title {
+  background: #0a8f3c;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+/* SLIDER */
+.hot-deals {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.hot-deals::-webkit-scrollbar {
+  display: none;
+}
+
+/* IMPORTANT: makes cards same size as your grid */
+.hot-deals .card {
+  flex: 0 0 48%;
+}
