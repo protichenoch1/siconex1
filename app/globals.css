@@ -251,11 +251,14 @@ body {
 /* ================= HOT DEALS BANNER ================= */
 
 .hot-deals {
+  width: 100%;                 /* full width */
   background: #0a8f3c;
   color: white;
-  padding: 14px;
-  border-radius: 10px;
-  margin: 10px 15px 15px;
-  font-size: 18px;
+
+  padding: 10px;               /* reduced height */
+  border-radius: 0;            /* edge-to-edge like Jumia */
+  margin: 10px 0;              /* remove side spacing */
+
+  font-size: 16px;             /* slightly smaller */
   font-weight: bold;
 }
