@@ -27,7 +27,7 @@ export default function Home() {
 
   <div className="hot-deals">
     <div className="card">
-      <img src="/p1.jpg" />
+      <img src="/galaxy06.jpg" />
       <h3>Samsung Galaxy A06</h3>
       <div className="price">KES 15,499</div>
       <button>Add to Cart</button>
