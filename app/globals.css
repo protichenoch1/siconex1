@@ -12,6 +12,14 @@ body {
   color: #111;
 }
 
+/* ================= HEADER (FIXED) ================= */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
 /* ================= NAVBAR ================= */
 
 .navbar {
@@ -20,7 +28,6 @@ body {
   align-items: center;
   background: #0a8f3c;
   padding: 12px 15px;
-  color: white;
 }
 
 /* LEFT */
@@ -32,12 +39,14 @@ body {
 
 .menu {
   font-size: 22px;
+  color: white;
   cursor: pointer;
 }
 
 .logo {
   font-size: 18px;
   font-weight: bold;
+  color: white;
   letter-spacing: 1px;
 }
 
@@ -45,41 +54,51 @@ body {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
 }
 
+/* ICONS (WHITE BACKGROUND) */
 .icon {
-  font-size: 20px;
-  color: white;
+  background: white;
+  color: black;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 18px;
   text-decoration: none;
 }
 
-/* ================= SEARCH ================= */
+/* ================= SEARCH BAR ================= */
 
-.search-wrapper {
-  background: #0a8f3c;
+.search-bar {
+  display: flex;
+  gap: 8px;
   padding: 10px 15px 15px;
+  background: #0a8f3c;
 }
 
-.search-wrapper input {
-  width: 100%;
-  display: block;
-  padding: 12px;
-  border-radius: 25px;
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
   border: none;
   outline: none;
   font-size: 14px;
+}
+
+.search-bar button {
+  background: #ff9900;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* ================= MAIN ================= */
 
 .container {
   padding: 15px;
-}
-
-h1 {
-  margin-bottom: 15px;
-  font-size: 22px;
 }
 
 /* ================= BANNER ================= */
