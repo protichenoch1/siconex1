@@ -24,6 +24,38 @@ export default function Home() {
    Hot Deals
 </div>
 
+  <div class="products">
+  
+  <div class="card">
+    <img src="/p1.jpg" />
+    <h3>Samsung Galaxy A06</h3>
+    <div class="price">KES 15,499</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="/vitron32.jpg" />
+    <h3>Vitron Smart Tv 32"</h3>
+    <div class="price">$300</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="/p3.jpg" />
+    <h3>HP Laptop</h3>
+    <div class="price">$550</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div class="card">
+    <img src="/p4.jpg" />
+    <h3>Power Bank 20000mAh</h3>
+    <div class="price">$25</div>
+    <button>Add to Cart</button>
+  </div>
+
+</div>
+
       {/* PRODUCTS */}
       <div className="grid">
         <ProductCard 
