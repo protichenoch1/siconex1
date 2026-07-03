@@ -5,9 +5,13 @@ export default function Home() {
     <main className="container">
 
       {/* BANNER */}
-      <div className="banner">
-        <h2>🔥 Big Deals Today</h2>
-      </div>
+      <div class="slider">
+  <div class="slides">
+    <img src="/banner1.jpg" />
+    <img src="/banner2.jpg" />
+    <img src="/banner3.jpg" />
+  </div>
+</div>
 
   <div className="categories">
   <div>📱 Phones</div>
