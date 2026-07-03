@@ -265,7 +265,7 @@ body {
 
 /* HOT DEALS TITLE */
 .hot-title {
-  background: white;
+  background: #0a8f3c;
   color: white;
   padding: 10px;
   font-weight: bold;
@@ -279,8 +279,13 @@ body {
   padding: 10px 0;
 }
 
-.hot-deals::-webkit-scrollbar {
-  display: none;
+.hot-deals {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  padding: 10px;
+
+  background: #fff; /* ✅ THIS is what you want */
 }
 
 /* IMPORTANT: makes cards same size as your grid */
