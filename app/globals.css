@@ -143,3 +143,28 @@ h1 {
     grid-template-columns: 1fr;
   }
   }
+
+/* BANNER */
+.banner {
+  background: linear-gradient(90deg, #0a8f3c, #12b76a);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* PRODUCT CARD IMAGE */
+.card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* PRICE */
+.price {
+  font-weight: bold;
+  color: #0a8f3c;
+  margin-bottom: 10px;
+}
