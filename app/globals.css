@@ -168,3 +168,19 @@ h1 {
   color: #0a8f3c;
   margin-bottom: 10px;
 }
+
+.categories {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.categories div {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 80px;
+  text-align: center;
+  font-size: 12px;
+}
