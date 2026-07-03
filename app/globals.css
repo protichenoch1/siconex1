@@ -210,3 +210,36 @@ body {
     font-size: 22px;
   }
 }
+
+/* ================= SLIDER ================= */
+
+.slider {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.slides {
+  display: flex;
+  width: 300%;
+  animation: slide 12s infinite;
+}
+
+.slides img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* ANIMATION */
+@keyframes slide {
+  0% { transform: translateX(0%); }
+  33% { transform: translateX(0%); }
+
+  38% { transform: translateX(-100%); }
+  66% { transform: translateX(-100%); }
+
+  71% { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
+    }
