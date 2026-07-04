@@ -157,6 +157,7 @@ body {
   border-radius: 10px;
   text-align: left;
   cursor: pointer;
+  position: relative;
 
   /* smoother animation */
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -365,4 +366,11 @@ body {
   border-radius: 4px;
 
   z-index: 2;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 2px;
 }
