@@ -251,19 +251,6 @@ body {
 
 /* ================= HOT DEALS BANNER ================= */
 
-.hot-deals {
-  width: 100%;                 /* full width */
-  background: #0a8f3c;
-  color: white;
-
-  padding: 10px;               /* reduced height */
-  border-radius: 0;            /* edge-to-edge like Jumia */
-  margin: 10px 0;              /* remove side spacing */
-
-  font-size: 16px;             /* slightly smaller */
-  font-weight: bold;
-}
-
 /* HOT DEALS TITLE */
 .hot-title {
   background: #0a8f3c;
@@ -273,13 +260,6 @@ body {
 }
 
 /* SLIDER */
-.hot-deals {
-  display: flex;
-  overflow-x: auto;
-  gap: 12px;
-  padding: 10px 0;
-}
-
 .hot-deals {
   display: flex;
   overflow-x: auto;
