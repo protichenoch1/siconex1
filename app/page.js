@@ -56,6 +56,30 @@ export default function Home() {
   </div>
 </div>
 
+  {/* SECOND BANNER */}
+<div className="banner">
+  🔥 New Arrivals
+</div>
+
+{/* PRODUCTS UNDER NEW BANNER */}
+<div className="products">
+
+  <div className="card">
+    <img src="/p3.jpg" />
+    <h3>HP Laptop</h3>
+    <div className="price">KES 55,000</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div className="card">
+    <img src="/p4.jpg" />
+    <h3>Power Bank 20000mAh</h3>
+    <div className="price">KES 2,500</div>
+    <button>Add to Cart</button>
+  </div>
+
+</div>
+
       {/* PRODUCTS */}
       <div className="products">
 
