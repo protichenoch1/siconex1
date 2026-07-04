@@ -9,12 +9,8 @@ const products = [
     price: "KES 15,499",
     image: "/galaxy06.jpg",
     description: "Affordable Samsung smartphone with long battery life.",
-    details: [
-      "6.5-inch HD Display",
-      "5000mAh Battery",
-      "Dual Camera",
-      "4GB RAM + 64GB Storage"
-    ]
+    category: "phones",
+    details: ["6.5-inch HD Display", "5000mAh Battery"]
   },
   {
     id: "2",
@@ -22,12 +18,8 @@ const products = [
     price: "KES 30,000",
     image: "/vitron32.jpg",
     description: "32-inch smart TV with clear display and streaming apps.",
-    details: [
-      "32-inch HD Screen",
-      "Smart Apps (YouTube, Netflix)",
-      "HDMI & USB Ports",
-      "Energy Saving"
-    ]
+    category: "tv",
+    details: ["Smart Apps", "HDMI & USB"]
   },
   {
     id: "3",
@@ -35,12 +27,8 @@ const products = [
     price: "KES 55,000",
     image: "/p3.jpg",
     description: "Reliable laptop for work, school, and everyday use.",
-    details: [
-      "Intel Processor",
-      "8GB RAM",
-      "256GB SSD",
-      "15.6-inch Display"
-    ]
+    category: "laptops",
+    details: ["8GB RAM", "256GB SSD"]
   },
   {
     id: "4",
@@ -48,12 +36,17 @@ const products = [
     price: "KES 2,500",
     image: "/p4.jpg",
     description: "High-capacity power bank for charging on the go.",
-    details: [
-      "20000mAh Capacity",
-      "Fast Charging",
-      "Dual USB Output",
-      "Portable Design"
-    ]
+    category: "accessories",
+    details: ["Fast Charging", "Portable"]
+  },
+  {
+    id: "5",
+    name: "Infinix Smart 8",
+    price: "KES 12,000",
+    image: "/phone2.jpg",
+    description: "Budget smartphone with smooth performance.",
+    category: "phones",
+    details: ["5000mAh Battery", "Dual SIM"]
   }
 ];
 
@@ -115,9 +108,7 @@ export default function ProductPage() {
 {/* RELATED PRODUCTS */}
 <div style={{ marginTop: "25px" }}>
   
-  <h3 style={{ marginBottom: "10px" }}>
-    Related Products
-  </h3>
+  <h3>Related Products</h3>
 
   <div style={{
     display: "grid",
@@ -126,10 +117,10 @@ export default function ProductPage() {
   }}>
 
     {products
-      .filter(p => p.id !== product.id) // exclude current product
-      .slice(0, 4) // limit to 4
+      .filter(p => p.category === product.category && p.id !== product.id)
+      .slice(0, 4)
       .map(item => (
-        
+
         <a
           key={item.id}
           href={`/product/${item.id}`}
@@ -152,14 +143,13 @@ export default function ProductPage() {
             }}
           />
 
-          <p style={{ fontSize: "14px", margin: "5px 0" }}>
+          <p style={{ fontSize: "14px" }}>
             {item.name}
           </p>
 
           <p style={{
             fontWeight: "bold",
-            color: "#0a8f3c",
-            fontSize: "14px"
+            color: "#0a8f3c"
           }}>
             {item.price}
           </p>
