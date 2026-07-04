@@ -344,3 +344,25 @@ body {
   font-size: 16px;
   font-weight: bold;
 }
+
+/* make card relative so badge can position inside */
+.card {
+  position: relative;
+}
+
+/* discount badge */
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+
+  background: #ff3b30;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+
+  padding: 4px 6px;
+  border-radius: 4px;
+
+  z-index: 2;
+}
