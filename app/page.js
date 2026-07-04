@@ -56,13 +56,8 @@ export default function Home() {
   </div>
 </div>
 
-  {/* SECOND BANNER */}
-<div className="banner">
-  🔥 New Arrivals
-</div>
-
-{/* PRODUCTS UNDER NEW BANNER */}
-<div className="products">
+{/* NEW ARRIVALS (SWIPE) */}
+<div className="hot-deals">
 
   <div className="card">
     <img src="/p3.jpg" />
