@@ -112,6 +112,64 @@ export default function ProductPage() {
 
 </div>
 
+{/* RELATED PRODUCTS */}
+<div style={{ marginTop: "25px" }}>
+  
+  <h3 style={{ marginBottom: "10px" }}>
+    Related Products
+  </h3>
+
+  <div style={{
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "10px"
+  }}>
+
+    {products
+      .filter(p => p.id !== product.id) // exclude current product
+      .slice(0, 4) // limit to 4
+      .map(item => (
+        
+        <a
+          key={item.id}
+          href={`/product/${item.id}`}
+          style={{
+            textDecoration: "none",
+            color: "black",
+            background: "#fff",
+            padding: "10px",
+            borderRadius: "10px",
+            border: "1px solid #eee"
+          }}
+        >
+
+          <img
+            src={item.image}
+            style={{
+              width: "100%",
+              height: "120px",
+              objectFit: "contain"
+            }}
+          />
+
+          <p style={{ fontSize: "14px", margin: "5px 0" }}>
+            {item.name}
+          </p>
+
+          <p style={{
+            fontWeight: "bold",
+            color: "#0a8f3c",
+            fontSize: "14px"
+          }}>
+            {item.price}
+          </p>
+
+        </a>
+      ))}
+
+  </div>
+</div>
+
       {/* STICKY BAR */}
       <div style={{
         position: "fixed",
