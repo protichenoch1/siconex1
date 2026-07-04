@@ -93,6 +93,43 @@ export default function Home() {
   </div>
 </div>
 
+  {/* ALL PRODUCTS */}
+<div className="hot-deals-section">
+  <div className="hot-title">All Products</div>
+
+  <div className="products">
+
+  <div className="card">
+    <img src="/p1.jpg" />
+    <h3>Samsung Galaxy A06</h3>
+    <div className="price">KES 15,499</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div className="card">
+    <img src="/vitron32.jpg" />
+    <h3>Vitron Smart Tv 32"</h3>
+    <div className="price">KES 30,000</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div className="card">
+    <img src="/p3.jpg" />
+    <h3>HP Laptop</h3>
+    <div className="price">KES 55,000</div>
+    <button>Add to Cart</button>
+  </div>
+
+  <div className="card">
+    <img src="/p4.jpg" />
+    <h3>Power Bank 20000mAh</h3>
+    <div className="price">KES 2,500</div>
+    <button>Add to Cart</button>
+  </div>
+
+</div>
+</div>
+
       {/* PRODUCTS */}
       <div className="products">
 
