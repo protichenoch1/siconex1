@@ -60,7 +60,7 @@ export default function Home() {
 
           <div className="card" onClick={() => goToProduct(4)}>
             <img src="/p4.jpg" />
-            <h3>Power Bank 20000mAh</h3>
+            <h3>PowerBank 20000mAh</h3>
             <div className="price">KES 2,500</div>
           </div>
 
