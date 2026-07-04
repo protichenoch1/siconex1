@@ -18,14 +18,6 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-}
-
-/* ================= HEADER (FIXED) ================= */
-
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   background: white;
 }
 
@@ -157,7 +149,6 @@ body {
   border-radius: 10px;
   text-align: left;
   cursor: pointer;
-  position: relative;
 
   /* smoother animation */
   transition: transform 0.25s ease, box-shadow 0.25s ease;
