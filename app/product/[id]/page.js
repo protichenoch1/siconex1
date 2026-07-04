@@ -7,6 +7,7 @@ const products = [
     id: "1",
     name: "Samsung Galaxy A06",
     price: "KES 15,499",
+    oldPrice: "KES 19,499",
     image: "/galaxy06.jpg",
     description: "Affordable Samsung smartphone with long battery life.",
     category: "phones",
