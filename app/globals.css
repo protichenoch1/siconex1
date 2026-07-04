@@ -178,6 +178,11 @@ body {
   font-size: 14px;
   margin-bottom: 5px;
   color: #111;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* PRICE */
