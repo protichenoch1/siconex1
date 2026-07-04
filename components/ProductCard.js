@@ -1,13 +1,28 @@
-export default function ProductCard({ name, price, image }) {
+export default function ProductCard({ product }) {
   return (
     <div className="card">
-      <img src={image} alt={name} />
 
-      <h3>{name}</h3>
+      {/* 🔥 Discount badge */}
+      {product.oldPrice && (
+        <span className="badge">
+          🔥 -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+        </span>
+      )}
 
-      <p className="price">{price}</p>
+      {/* IMAGE */}
+      <img src={product.image} alt={product.name} />
 
-      <button>Add to Cart</button>
+      {/* NAME */}
+      <h3>{product.name}</h3>
+
+      {/* OLD PRICE */}
+      {product.oldPrice && (
+        <p className="old-price">KES {product.oldPrice}</p>
+      )}
+
+      {/* NEW PRICE */}
+      <p className="price">KES {product.price}</p>
+
     </div>
   );
-}
+        }
