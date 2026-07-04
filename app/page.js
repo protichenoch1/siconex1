@@ -89,7 +89,8 @@ export default function Home() {
     <div className="price">KES 2,500</div>
     <button>Add to Cart</button>
   </div>
-
+    
+  </div>
 </div>
 
       {/* PRODUCTS */}
