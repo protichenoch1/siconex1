@@ -148,6 +148,16 @@ export default function ProductPage() {
             {item.name}
           </p>
 
+            {item.oldPrice && (
+  <p style={{
+    textDecoration: "line-through",
+    color: "#888",
+    fontSize: "12px"
+  }}>
+    KES {item.oldPrice.toLocaleString()}
+  </p>
+)}
+
           <p style={{
   fontWeight: "bold",
   color: "#0a8f3c"
