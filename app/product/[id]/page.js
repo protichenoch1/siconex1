@@ -35,16 +35,26 @@ const products = [
 
 export default function ProductPage() {
   const { id } = useParams();
-
   const product = products.find(p => p.id === id);
 
   if (!product) return <p>Product not found</p>;
 
   return (
-    <div style={{ padding: "15px" }}>
-      
-      <img src={product.image} style={{ width: "100%", borderRadius: "10px" }} />
+    <div style={{ padding: "15px", paddingBottom: "80px" }}>
 
+      {/* IMAGE */}
+      <img
+        src={product.image}
+        style={{
+          width: "100%",
+          height: "300px",
+          objectFit: "contain",   // ✅ FIXED (no cropping)
+          borderRadius: "10px",
+          background: "#fff"
+        }}
+      />
+
+      {/* INFO */}
       <h2 style={{ marginTop: "10px" }}>{product.name}</h2>
 
       <p style={{ color: "#0a8f3c", fontWeight: "bold" }}>
@@ -55,16 +65,28 @@ export default function ProductPage() {
         {product.description}
       </p>
 
-      <button style={{
+      {/* STICKY BAR */}
+      <div style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
         width: "100%",
-        padding: "12px",
-        background: "#0a8f3c",
-        color: "white",
-        border: "none",
-        borderRadius: "6px"
+        background: "#fff",
+        borderTop: "1px solid #eee",
+        padding: "10px"
       }}>
-        Add to Cart
-      </button>
+        <button style={{
+          width: "100%",
+          padding: "14px",
+          background: "#0a8f3c",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          fontWeight: "bold"
+        }}>
+          Add to Cart
+        </button>
+      </div>
 
     </div>
   );
