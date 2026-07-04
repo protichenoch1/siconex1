@@ -149,11 +149,11 @@ export default function ProductPage() {
           </p>
 
           <p style={{
-            fontWeight: "bold",
-            color: "#0a8f3c"
-          }}>
-            {item.price}
-          </p>
+  fontWeight: "bold",
+  color: "#0a8f3c"
+}}>
+  KES {item.price.toLocaleString()}
+</p>
 
         </a>
       ))}
