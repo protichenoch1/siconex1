@@ -1,17 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { products } from "@/data/products";
 
 export default function Home() {
   const router = useRouter();
 
   const goToProduct = (id) => {
     router.push(`/product/${id}`);
-  };
-
-  const addToCart = (e) => {
-    e.stopPropagation();
-    alert("Added to cart");
   };
 
   return (
@@ -39,31 +35,30 @@ export default function Home() {
         <div className="hot-title">Hot Deals</div>
 
         <div className="hot-deals">
+          {products.slice(0, 4).map(product => (
+            <div
+              key={product.id}
+              className="card"
+              onClick={() => goToProduct(product.id)}
+            >
+              <img src={product.image} />
+              <h3>{product.name}</h3>
 
-          <div className="card" onClick={() => goToProduct(1)}>
-            <img src="/galaxy06.jpg" />
-            <h3>Samsung Galaxy A06</h3>
-            <div className="price">KES 15,499</div>
-          </div>
+              {product.oldPrice && (
+                <div style={{
+                  textDecoration: "line-through",
+                  color: "#888",
+                  fontSize: "12px"
+                }}>
+                  KES {product.oldPrice.toLocaleString()}
+                </div>
+              )}
 
-          <div className="card" onClick={() => goToProduct(2)}>
-            <img src="/vitron32.jpg" />
-            <h3>Vitron Smart Tv 32"</h3>
-            <div className="price">KES 30,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(3)}>
-            <img src="/p3.jpg" />
-            <h3>HP Laptop</h3>
-            <div className="price">KES 55,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(4)}>
-            <img src="/p4.jpg" />
-            <h3>PowerBank 20000mAh</h3>
-            <div className="price">KES 2,500</div>
-          </div>
-
+              <div className="price">
+                KES {product.price.toLocaleString()}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -72,31 +67,20 @@ export default function Home() {
         <div className="hot-title">🔥 New Arrivals</div>
 
         <div className="hot-deals">
+          {products.slice(1, 5).map(product => (
+            <div
+              key={product.id}
+              className="card"
+              onClick={() => goToProduct(product.id)}
+            >
+              <img src={product.image} />
+              <h3>{product.name}</h3>
 
-          <div className="card" onClick={() => goToProduct(3)}>
-            <img src="/p3.jpg" />
-            <h3>HP Laptop</h3>
-            <div className="price">KES 55,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(4)}>
-            <img src="/p4.jpg" />
-            <h3>Power Bank 20000mAh</h3>
-            <div className="price">KES 2,500</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(3)}>
-            <img src="/p3.jpg" />
-            <h3>HP Laptop</h3>
-            <div className="price">KES 55,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(4)}>
-            <img src="/p4.jpg" />
-            <h3>Power Bank 20000mAh</h3>
-            <div className="price">KES 2,500</div>
-          </div>
-
+              <div className="price">
+                KES {product.price.toLocaleString()}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -105,34 +89,33 @@ export default function Home() {
         <div className="hot-title">All Products</div>
 
         <div className="products">
+          {products.map(product => (
+            <div
+              key={product.id}
+              className="card"
+              onClick={() => goToProduct(product.id)}
+            >
+              <img src={product.image} />
+              <h3>{product.name}</h3>
 
-          <div className="card" onClick={() => goToProduct(1)}>
-            <img src="/p1.jpg" />
-            <h3>Samsung Galaxy A06</h3>
-            <div className="price">KES 15,499</div>
-          </div>
+              {product.oldPrice && (
+                <div style={{
+                  textDecoration: "line-through",
+                  color: "#888",
+                  fontSize: "12px"
+                }}>
+                  KES {product.oldPrice.toLocaleString()}
+                </div>
+              )}
 
-          <div className="card" onClick={() => goToProduct(2)}>
-            <img src="/vitron32.jpg" />
-            <h3>Vitron Smart Tv 32"</h3>
-            <div className="price">KES 30,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(3)}>
-            <img src="/p3.jpg" />
-            <h3>HP Laptop</h3>
-            <div className="price">KES 55,000</div>
-          </div>
-
-          <div className="card" onClick={() => goToProduct(4)}>
-            <img src="/p4.jpg" />
-            <h3>Power Bank 20000mAh</h3>
-            <div className="price">KES 2,500</div>
-          </div>
-
+              <div className="price">
+                KES {product.price.toLocaleString()}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
     </main>
   );
-}
+                }
