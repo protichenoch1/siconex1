@@ -8,28 +8,52 @@ const products = [
     name: "Samsung Galaxy A06",
     price: "KES 15,499",
     image: "/galaxy06.jpg",
-    description: "Affordable Samsung smartphone with long battery life."
+    description: "Affordable Samsung smartphone with long battery life.",
+    details: [
+      "6.5-inch HD Display",
+      "5000mAh Battery",
+      "Dual Camera",
+      "4GB RAM + 64GB Storage"
+    ]
   },
   {
     id: "2",
     name: "Vitron Smart TV 32\"",
     price: "KES 30,000",
     image: "/vitron32.jpg",
-    description: "32-inch smart TV with clear display and streaming apps."
+    description: "32-inch smart TV with clear display and streaming apps.",
+    details: [
+      "32-inch HD Screen",
+      "Smart Apps (YouTube, Netflix)",
+      "HDMI & USB Ports",
+      "Energy Saving"
+    ]
   },
   {
     id: "3",
     name: "HP Laptop",
     price: "KES 55,000",
     image: "/p3.jpg",
-    description: "Reliable laptop for work, school, and everyday use."
+    description: "Reliable laptop for work, school, and everyday use.",
+    details: [
+      "Intel Processor",
+      "8GB RAM",
+      "256GB SSD",
+      "15.6-inch Display"
+    ]
   },
   {
     id: "4",
     name: "Power Bank 20000mAh",
     price: "KES 2,500",
     image: "/p4.jpg",
-    description: "High-capacity power bank for charging on the go."
+    description: "High-capacity power bank for charging on the go.",
+    details: [
+      "20000mAh Capacity",
+      "Fast Charging",
+      "Dual USB Output",
+      "Portable Design"
+    ]
   }
 ];
 
@@ -61,9 +85,32 @@ export default function ProductPage() {
         {product.price}
       </p>
 
-      <p style={{ margin: "10px 0" }}>
-        {product.description}
-      </p>
+      {/* JUMIA-STYLE DESCRIPTION */}
+<div style={{
+  marginTop: "20px",
+  background: "#fff",
+  padding: "15px",
+  borderRadius: "10px",
+  border: "1px solid #eee"
+}}>
+
+  <h3 style={{ marginBottom: "10px" }}>
+    Product Details
+  </h3>
+
+  <p style={{ color: "#555", marginBottom: "10px" }}>
+    {product.description}
+  </p>
+
+  <ul style={{ paddingLeft: "18px", color: "#444" }}>
+    {product.details.map((item, index) => (
+      <li key={index} style={{ marginBottom: "6px" }}>
+        {item}
+      </li>
+    ))}
+  </ul>
+
+</div>
 
       {/* STICKY BAR */}
       <div style={{
