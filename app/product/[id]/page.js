@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { products } from "../../../data/products";
 import { addToCart } from "../../../lib/cart";
+import AddToCartButton from "../../../components/AddToCartButton";
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -206,23 +207,7 @@ export default function ProductPage() {
         borderTop: "1px solid #eee",
         padding: "10px"
       }}>
-        <button
-  onClick={() => {
-    addToCart(product);
-    alert("Added to cart");
-  }}
-  style={{
-    width: "100%",
-    padding: "14px",
-    background: "#0a8f3c",
-    color: "white",
-    border: "none",
-    borderRadius: "8px",
-    fontWeight: "bold"
-  }}
->
-  Add to Cart
-</button>
+        <AddToCartButton product={product} />
       </div>
 
     </div>
