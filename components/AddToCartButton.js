@@ -123,9 +123,15 @@ export default function AddToCartButton({ product }) {
           −
         </button>
 
-        <span style={{ fontWeight: "bold", fontSize: "16px" }}>
-          {qty}
-        </span>
+        <span style={{
+  fontWeight: "bold",
+  fontSize: "16px",
+  minWidth: "50px",
+  textAlign: "center",
+  display: "inline-block"
+}}>
+  {qty}
+</span>
 
         <button
           onClick={increase}
