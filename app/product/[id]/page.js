@@ -67,7 +67,8 @@ export default function ProductPage() {
   <p style={{
     color: "#444",
     marginBottom: "15px",
-    lineHeight: "1.5"
+    lineHeight: "1.5",
+    fontSize: "13px"
   }}>
     {product.description}
   </p>
@@ -76,9 +77,9 @@ export default function ProductPage() {
   {product.features && (
     <>
       <h4 style={{ marginBottom: "8px" }}>Key Features</h4>
-      <ul style={{ paddingLeft: "18px", marginBottom: "15px" }}>
+      <ul style={{ paddingLeft: "18px", marginBottom: "12px", fontSize: "13px" }}>
         {product.features.map((item, index) => (
-          <li key={index} style={{ marginBottom: "6px" }}>
+          <li key={index} style={{ marginBottom: "5px" }}>
             {item}
           </li>
         ))}
