@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { products } from "../../../data/products";
+import { addToCart } from "../../../lib/cart";
 
 export default function ProductPage() {
   const { id } = useParams();
