@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AccountPage() {
   const [user, setUser] = useState(null);
@@ -10,76 +10,108 @@ export default function AccountPage() {
     if (savedUser) setUser(savedUser);
   }, []);
 
-  // Logout
-  const handleLogout = () => {
+  const logout = () => {
     localStorage.removeItem("user");
     setUser(null);
   };
 
-  // If NOT logged in
-  if (!user) {
-    return (
-      <div style={{ padding: "20px" }}>
-        <h2>My Account</h2>
-
-        <p style={{ margin: "15px 0", color: "#555" }}>
-          Login or create an account to continue
-        </p>
-
-        <button
-          onClick={() => {
-            const fakeUser = { name: "Guest User", email: "guest@email.com" };
-            localStorage.setItem("user", JSON.stringify(fakeUser));
-            setUser(fakeUser);
-          }}
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: "#0a8f3c",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            fontWeight: "bold"
-          }}
-        >
-          Login
-        </button>
-      </div>
-    );
-  }
-
-  // If logged in
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>My Account</h2>
-
+    <div style={{ padding: "15px", background: "#f5f5f5", minHeight: "100vh" }}>
+      
+      {/* HEADER */}
       <div style={{
         background: "#fff",
         padding: "15px",
         borderRadius: "10px",
-        border: "1px solid #eee",
-        marginTop: "15px"
+        marginBottom: "15px"
       }}>
-        <p><strong>Name:</strong> {user.name}</p>
-        <p><strong>Email:</strong> {user.email}</p>
+        <h2>My Account</h2>
+        {user ? (
+          <p style={{ color: "#555" }}>
+            {user.name} • {user.email}
+          </p>
+        ) : (
+          <p style={{ color: "#555" }}>
+            Welcome! Please login
+          </p>
+        )}
       </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={handleLogout}
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: "#e53935",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            fontWeight: "bold"
-          }}
-        >
-          Logout
-        </button>
+      {/* MENU */}
+      <div style={{
+        background: "#fff",
+        borderRadius: "10px",
+        overflow: "hidden"
+      }}>
+
+        {[
+          "My Orders",
+          "Saved Items",
+          "My Details",
+          "Address Book",
+          "Payment Methods",
+          "Help Center"
+        ].map((item, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "14px",
+              borderBottom: "1px solid #eee",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontSize: "14px"
+            }}
+          >
+            <span>{item}</span>
+            <span style={{ color: "#999" }}>›</span>
+          </div>
+        ))}
+
       </div>
+
+      {/* LOGIN / LOGOUT */}
+      <div style={{ marginTop: "20px" }}>
+        {!user ? (
+          <button
+            onClick={() => {
+              const fakeUser = {
+                name: "Aaron Bett",
+                email: "aaron@email.com"
+              };
+              localStorage.setItem("user", JSON.stringify(fakeUser));
+              setUser(fakeUser);
+            }}
+            style={{
+              width: "100%",
+              padding: "14px",
+              background: "#0a8f3c",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              fontWeight: "bold"
+            }}
+          >
+            LOGIN
+          </button>
+        ) : (
+          <button
+            onClick={logout}
+            style={{
+              width: "100%",
+              padding: "14px",
+              background: "#e53935",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              fontWeight: "bold"
+            }}
+          >
+            LOGOUT
+          </button>
+        )}
+      </div>
+
     </div>
   );
             }
