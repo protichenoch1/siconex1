@@ -1,55 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-
-const products = [
-  {
-    id: "1",
-    name: "Samsung Galaxy A06",
-    price: 15499,
-    oldPrice: 19499,
-    image: "/galaxy06.jpg",
-    description: "Affordable Samsung smartphone with long battery life.",
-    category: "phones",
-    details: ["6.5-inch HD Display", "5000mAh Battery"]
-  },
-  {
-    id: "2",
-    name: "Vitron Smart TV 32\"",
-    price: "KES 30,000",
-    image: "/vitron32.jpg",
-    description: "32-inch smart TV with clear display and streaming apps.",
-    category: "tv",
-    details: ["Smart Apps", "HDMI & USB"]
-  },
-  {
-    id: "3",
-    name: "HP Laptop",
-    price: "KES 55,000",
-    image: "/p3.jpg",
-    description: "Reliable laptop for work, school, and everyday use.",
-    category: "laptops",
-    details: ["8GB RAM", "256GB SSD"]
-  },
-  {
-    id: "4",
-    name: "Power Bank 20000mAh",
-    price: "KES 2,500",
-    image: "/p4.jpg",
-    description: "High-capacity power bank for charging on the go.",
-    category: "accessories",
-    details: ["Fast Charging", "Portable"]
-  },
-  {
-    id: "5",
-    name: "Infinix Smart 8",
-    price: "KES 12,000",
-    image: "/phone2.jpg",
-    description: "Budget smartphone with smooth performance.",
-    category: "phones",
-    details: ["5000mAh Battery", "Dual SIM"]
-  }
-];
+import { products } from "../../data/products";
 
 export default function ProductPage() {
   const { id } = useParams();
