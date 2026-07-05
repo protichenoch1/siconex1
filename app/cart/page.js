@@ -10,18 +10,22 @@ export default function Cart() {
     setCart(storedCart);
   }, []);
 
-  // ➕ increase quantity
+  const updateCart = (updated) => {
+    setCart(updated);
+    localStorage.setItem("cart", JSON.stringify(updated));
+  };
+
+  // ➕ increase
   const increaseQty = (id) => {
     const updated = cart.map(item =>
       item.id === id
         ? { ...item, quantity: item.quantity + 1 }
         : item
     );
-    setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
+    updateCart(updated);
   };
 
-  // ➖ decrease quantity
+  // ➖ decrease
   const decreaseQty = (id) => {
     const updated = cart
       .map(item =>
@@ -31,18 +35,15 @@ export default function Cart() {
       )
       .filter(item => item.quantity > 0);
 
-    setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
+    updateCart(updated);
   };
 
-  // ❌ remove item
+  // ❌ remove
   const removeItem = (id) => {
     const updated = cart.filter(item => item.id !== id);
-    setCart(updated);
-    localStorage.setItem("cart", JSON.stringify(updated));
+    updateCart(updated);
   };
 
-  // 💰 total price
   const total = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -64,14 +65,16 @@ export default function Cart() {
       {cart.map(item => (
         <div key={item.id} style={{
           display: "flex",
-          gap: "10px",
+          gap: "12px",
           background: "#fff",
-          padding: "10px",
+          padding: "12px",
           borderRadius: "10px",
-          marginBottom: "10px",
-          border: "1px solid #eee"
+          marginBottom: "12px",
+          border: "1px solid #eee",
+          alignItems: "center"
         }}>
 
+          {/* IMAGE */}
           <img
             src={item.image}
             style={{
@@ -81,36 +84,73 @@ export default function Cart() {
             }}
           />
 
+          {/* INFO */}
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: "14px" }}>{item.name}</p>
+            <p style={{ fontSize: "14px", marginBottom: "4px" }}>
+              {item.name}
+            </p>
 
             <p style={{
               color: "#0a8f3c",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              marginBottom: "6px"
             }}>
               KES {item.price.toLocaleString()}
             </p>
 
-            {/* QUANTITY CONTROLS */}
-            <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
-              <button onClick={() => decreaseQty(item.id)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => increaseQty(item.id)}>+</button>
-            </div>
+            {/* QUANTITY */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px"
+            }}>
+              <button
+                onClick={() => decreaseQty(item.id)}
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  background: "#f5f5f5",
+                  fontWeight: "bold"
+                }}
+              >
+                −
+              </button>
 
-            {/* REMOVE */}
-            <button
-              onClick={() => removeItem(item.id)}
-              style={{
-                marginTop: "5px",
-                color: "red",
-                border: "none",
-                background: "none"
-              }}
-            >
-              Remove
-            </button>
+              <span style={{ minWidth: "20px", textAlign: "center" }}>
+                {item.quantity}
+              </span>
+
+              <button
+                onClick={() => increaseQty(item.id)}
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  background: "#f5f5f5",
+                  fontWeight: "bold"
+                }}
+              >
+                +
+              </button>
+            </div>
           </div>
+
+          {/* REMOVE RIGHT */}
+          <button
+            onClick={() => removeItem(item.id)}
+            style={{
+              color: "#ff3b30",
+              border: "none",
+              background: "none",
+              fontSize: "13px",
+              alignSelf: "flex-start"
+            }}
+          >
+            Remove
+          </button>
 
         </div>
       ))}
@@ -144,4 +184,4 @@ export default function Cart() {
 
     </div>
   );
-      }
+}
