@@ -52,7 +52,7 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <div className="container">
-        <h2>My Cart</h2>
+        <h1>My Cart</h1>
         <p>No items yet.</p>
       </div>
     );
