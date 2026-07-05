@@ -126,7 +126,7 @@ export default function AddToCartButton({ product }) {
         <span style={{
   fontWeight: "bold",
   fontSize: "16px",
-  minWidth: "50px",
+  minWidth: "90px",
   textAlign: "center",
   display: "inline-block"
 }}>
