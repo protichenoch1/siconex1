@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { products } from "../../../data/products";
 
 export default function ProductPage() {
@@ -18,7 +19,7 @@ export default function ProductPage() {
         style={{
           width: "100%",
           height: "300px",
-          objectFit: "contain",   // ✅ FIXED (no cropping)
+          objectFit: "contain",
           borderRadius: "10px",
           background: "#fff"
         }}
@@ -27,101 +28,127 @@ export default function ProductPage() {
       {/* INFO */}
       <h2 style={{ marginTop: "10px" }}>{product.name}</h2>
 
-      <p style={{ color: "#0a8f3c", fontWeight: "bold" }}>
-        {product.price}
+      {/* OLD PRICE */}
+      {product.oldPrice && (
+        <p style={{
+          textDecoration: "line-through",
+          color: "#888",
+          fontSize: "14px"
+        }}>
+          KES {product.oldPrice.toLocaleString()}
+        </p>
+      )}
+
+      {/* PRICE */}
+      <p style={{ color: "#0a8f3c", fontWeight: "bold", fontSize: "18px" }}>
+        KES {product.price.toLocaleString()}
       </p>
 
-      {/* JUMIA-STYLE DESCRIPTION */}
-<div style={{
-  marginTop: "20px",
-  background: "#fff",
-  padding: "15px",
-  borderRadius: "10px",
-  border: "1px solid #eee"
-}}>
+      {/* DISCOUNT BADGE */}
+      {product.oldPrice && (
+        <div className="badge">
+          🔥 -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+        </div>
+      )}
 
-  <h3 style={{ marginBottom: "10px" }}>
-    Product Details
-  </h3>
+      {/* DESCRIPTION */}
+      <div style={{
+        marginTop: "20px",
+        background: "#fff",
+        padding: "15px",
+        borderRadius: "10px",
+        border: "1px solid #eee"
+      }}>
 
-  <p style={{ color: "#555", marginBottom: "10px" }}>
-    {product.description}
-  </p>
+        <h3 style={{ marginBottom: "10px" }}>
+          Product Details
+        </h3>
 
-  <ul style={{ paddingLeft: "18px", color: "#444" }}>
-    {product.details.map((item, index) => (
-      <li key={index} style={{ marginBottom: "6px" }}>
-        {item}
-      </li>
-    ))}
-  </ul>
+        <p style={{ color: "#555", marginBottom: "10px" }}>
+          {product.description}
+        </p>
 
-</div>
+        <ul style={{ paddingLeft: "18px", color: "#444" }}>
+          {(product.details || []).map((item, index) => (
+            <li key={index} style={{ marginBottom: "6px" }}>
+              {item}
+            </li>
+          ))}
+        </ul>
 
-{/* RELATED PRODUCTS */}
-<div style={{ marginTop: "25px" }}>
-  
-  <h3>Related Products</h3>
+      </div>
 
-  <div style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "10px"
-  }}>
+      {/* RELATED PRODUCTS */}
+      <div style={{ marginTop: "25px" }}>
+        <h3>Related Products</h3>
 
-    {products
-      .filter(p => p.category === product.category && p.id !== product.id)
-      .slice(0, 4)
-      .map(item => (
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "10px"
+        }}>
 
-        <a
-          key={item.id}
-          href={`/product/${item.id}`}
-          style={{
-            textDecoration: "none",
-            color: "black",
-            background: "#fff",
-            padding: "10px",
-            borderRadius: "10px",
-            border: "1px solid #eee"
-          }}
-        >
+          {products
+            .filter(p => p.category === product.category && p.id !== product.id)
+            .slice(0, 4)
+            .map(item => (
 
-          <img
-            src={item.image}
-            style={{
-              width: "100%",
-              height: "120px",
-              objectFit: "contain"
-            }}
-          />
+              <Link
+                key={item.id}
+                href={`/product/${item.id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  background: "#fff",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  border: "1px solid #eee",
+                  position: "relative"
+                }}
+              >
 
-          <p style={{ fontSize: "14px" }}>
-            {item.name}
-          </p>
+                {/* BADGE */}
+                {item.oldPrice && (
+                  <div className="badge">
+                    🔥 -{Math.round(((item.oldPrice - item.price) / item.oldPrice) * 100)}%
+                  </div>
+                )}
 
-            {item.oldPrice && (
-  <p style={{
-    textDecoration: "line-through",
-    color: "#888",
-    fontSize: "12px"
-  }}>
-    KES {item.oldPrice.toLocaleString()}
-  </p>
-)}
+                <img
+                  src={item.image}
+                  style={{
+                    width: "100%",
+                    height: "120px",
+                    objectFit: "contain"
+                  }}
+                />
 
-          <p style={{
-  fontWeight: "bold",
-  color: "#0a8f3c"
-}}>
-  KES {item.price.toLocaleString()}
-</p>
+                <p style={{ fontSize: "14px" }}>
+                  {item.name}
+                </p>
 
-        </a>
-      ))}
+                {item.oldPrice && (
+                  <p style={{
+                    textDecoration: "line-through",
+                    color: "#888",
+                    fontSize: "12px"
+                  }}>
+                    KES {item.oldPrice.toLocaleString()}
+                  </p>
+                )}
 
-  </div>
-</div>
+                <p style={{
+                  fontWeight: "bold",
+                  color: "#0a8f3c"
+                }}>
+                  KES {item.price.toLocaleString()}
+                </p>
+
+              </Link>
+            ))}
+
+        </div>
+      </div>
 
       {/* STICKY BAR */}
       <div style={{
@@ -148,4 +175,4 @@ export default function ProductPage() {
 
     </div>
   );
-    }
+            }
