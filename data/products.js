@@ -20,7 +20,7 @@ export const products = [
     Connectivity: "4G"
   },
   category: "phones"
-  }
+  },
   {
     id: "2",
     name: "Vitron Smart TV 32\"",
