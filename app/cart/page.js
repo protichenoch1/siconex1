@@ -52,7 +52,7 @@ export default function Cart() {
   if (cart.length === 0) {
     return (
       <div className="container">
-        <h1>My Cart</h1>
+        <h2>My Cart</h2>
         <p>No items yet.</p>
       </div>
     );
@@ -60,7 +60,7 @@ export default function Cart() {
 
   return (
     <div style={{ padding: "15px", paddingBottom: "80px" }}>
-      <h1>Your Cart</h1>
+      <h2>My Cart</h2>
 
       {cart.map(item => (
         <div key={item.id} style={{
