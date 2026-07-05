@@ -25,7 +25,7 @@ export default function AccountPage() {
         borderRadius: "10px",
         marginBottom: "15px"
       }}>
-        <h2>My Account</h2>
+        <h3>My Account</h3>
         {user ? (
           <p style={{ color: "#555" }}>
             {user.name} • {user.email}
