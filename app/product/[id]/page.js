@@ -206,17 +206,23 @@ export default function ProductPage() {
         borderTop: "1px solid #eee",
         padding: "10px"
       }}>
-        <button style={{
-          width: "100%",
-          padding: "14px",
-          background: "#0a8f3c",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          fontWeight: "bold"
-        }}>
-          Add to Cart
-        </button>
+        <button
+  onClick={() => {
+    addToCart(product);
+    alert("Added to cart");
+  }}
+  style={{
+    width: "100%",
+    padding: "14px",
+    background: "#0a8f3c",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    fontWeight: "bold"
+  }}
+>
+  Add to Cart
+</button>
       </div>
 
     </div>
