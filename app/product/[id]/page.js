@@ -13,22 +13,29 @@ export default function ProductPage() {
   return (
     <div style={{ padding: "15px", paddingBottom: "80px" }}>
 
-      {/* IMAGE */}
-      <img
-        src={product.image}
-        style={{
-          width: "100%",
-          height: "300px",
-          objectFit: "contain",
-          borderRadius: "10px",
-          background: "#fff"
-        }}
-      />
+      {/* IMAGE + BADGE */}
+      <div style={{ position: "relative" }}>
+        {product.oldPrice && (
+          <div className="badge">
+            🔥 -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+          </div>
+        )}
+
+        <img
+          src={product.image}
+          style={{
+            width: "100%",
+            height: "300px",
+            objectFit: "contain",
+            borderRadius: "10px",
+            background: "#fff"
+          }}
+        />
+      </div>
 
       {/* INFO */}
       <h2 style={{ marginTop: "10px" }}>{product.name}</h2>
 
-      {/* OLD PRICE */}
       {product.oldPrice && (
         <p style={{
           textDecoration: "line-through",
@@ -39,79 +46,86 @@ export default function ProductPage() {
         </p>
       )}
 
-      {/* PRICE */}
-      <p style={{ color: "#0a8f3c", fontWeight: "bold", fontSize: "18px" }}>
+      <p style={{
+        color: "#0a8f3c",
+        fontWeight: "bold",
+        fontSize: "18px"
+      }}>
         KES {product.price.toLocaleString()}
       </p>
 
-      {/* DISCOUNT BADGE */}
-      {product.oldPrice && (
-        <div className="badge">
-          🔥 -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
-        </div>
-      )}
+      {/* DESCRIPTION SECTION */}
+      <div style={{
+        marginTop: "20px",
+        background: "#fff",
+        padding: "15px",
+        borderRadius: "10px",
+        border: "1px solid #eee"
+      }}>
 
-<div style={{
-  marginTop: "20px",
-  background: "#fff",
-  padding: "15px",
-  borderRadius: "10px",
-  border: "1px solid #eee"
-}}>
+        <h3 style={{ marginBottom: "10px", fontSize: "16px" }}>
+          Product Details
+        </h3>
 
-  <h3 style={{ marginBottom: "10px" }}>
-    Product Details
-  </h3>
+        {/* DESCRIPTION */}
+        <p style={{
+          color: "#444",
+          marginBottom: "12px",
+          lineHeight: "1.5",
+          fontSize: "13px"
+        }}>
+          {product.description}
+        </p>
 
-  {/* DESCRIPTION */}
-  <p style={{
-    color: "#444",
-    marginBottom: "15px",
-    lineHeight: "1.5",
-    fontSize: "13px"
-  }}>
-    {product.description}
-  </p>
+        {/* FEATURES */}
+        {product.features && (
+          <>
+            <h4 style={{ marginBottom: "8px", fontSize: "14px" }}>
+              Key Features
+            </h4>
 
-  {/* FEATURES */}
-  {product.features && (
-    <>
-      <h4 style={{ marginBottom: "8px" }}>Key Features</h4>
-      <ul style={{ paddingLeft: "18px", marginBottom: "12px", fontSize: "13px" }}>
-        {product.features.map((item, index) => (
-          <li key={index} style={{ marginBottom: "5px" }}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </>
-  )}
+            <ul style={{
+              paddingLeft: "18px",
+              marginBottom: "12px",
+              fontSize: "13px"
+            }}>
+              {product.features.map((item, index) => (
+                <li key={index} style={{ marginBottom: "5px" }}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
 
-  {/* SPECIFICATIONS */}
-  {product.specs && (
-    <>
-      <h4 style={{ marginBottom: "8px" }}>Specifications</h4>
-      <div>
-        {Object.entries(product.specs).map(([key, value]) => (
-          <div key={key} style={{
-            display: "flex",
-            justifyContent: "space-between",
-            borderBottom: "1px solid #eee",
-            padding: "6px 0"
-          }}>
-            <span style={{ color: "#666" }}>{key}</span>
-            <span style={{ fontWeight: "500" }}>{value}</span>
-          </div>
-        ))}
+        {/* SPECIFICATIONS */}
+        {product.specs && (
+          <>
+            <h4 style={{ marginBottom: "8px", fontSize: "14px" }}>
+              Specifications
+            </h4>
+
+            <div style={{ fontSize: "13px" }}>
+              {Object.entries(product.specs).map(([key, value]) => (
+                <div key={key} style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid #eee",
+                  padding: "5px 0"
+                }}>
+                  <span style={{ color: "#666" }}>{key}</span>
+                  <span style={{ fontWeight: "500" }}>{value}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
       </div>
-    </>
-  )}
-
-</div>
 
       {/* RELATED PRODUCTS */}
       <div style={{ marginTop: "25px" }}>
-        <h3>Related Products</h3>
+        <h3 style={{ fontSize: "16px" }}>Related Products</h3>
 
         <div style={{
           display: "grid",
