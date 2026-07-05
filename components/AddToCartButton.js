@@ -90,7 +90,7 @@ export default function AddToCartButton({ product }) {
         borderRadius: "8px",
         fontWeight: "bold"
       }}>
-        Added ✓
+        Added to cart successfully ✓
       </button>
     );
   }
