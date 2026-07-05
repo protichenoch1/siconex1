@@ -51,32 +51,62 @@ export default function ProductPage() {
         </div>
       )}
 
-      {/* DESCRIPTION */}
-      <div style={{
-        marginTop: "20px",
-        background: "#fff",
-        padding: "15px",
-        borderRadius: "10px",
-        border: "1px solid #eee"
-      }}>
+<div style={{
+  marginTop: "20px",
+  background: "#fff",
+  padding: "15px",
+  borderRadius: "10px",
+  border: "1px solid #eee"
+}}>
 
-        <h3 style={{ marginBottom: "10px" }}>
-          Product Details
-        </h3>
+  <h3 style={{ marginBottom: "10px" }}>
+    Product Details
+  </h3>
 
-        <p style={{ color: "#555", marginBottom: "10px" }}>
-          {product.description}
-        </p>
+  {/* DESCRIPTION */}
+  <p style={{
+    color: "#444",
+    marginBottom: "15px",
+    lineHeight: "1.5"
+  }}>
+    {product.description}
+  </p>
 
-        <ul style={{ paddingLeft: "18px", color: "#444" }}>
-          {(product.details || []).map((item, index) => (
-            <li key={index} style={{ marginBottom: "6px" }}>
-              {item}
-            </li>
-          ))}
-        </ul>
+  {/* FEATURES */}
+  {product.features && (
+    <>
+      <h4 style={{ marginBottom: "8px" }}>Key Features</h4>
+      <ul style={{ paddingLeft: "18px", marginBottom: "15px" }}>
+        {product.features.map((item, index) => (
+          <li key={index} style={{ marginBottom: "6px" }}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
 
+  {/* SPECIFICATIONS */}
+  {product.specs && (
+    <>
+      <h4 style={{ marginBottom: "8px" }}>Specifications</h4>
+      <div>
+        {Object.entries(product.specs).map(([key, value]) => (
+          <div key={key} style={{
+            display: "flex",
+            justifyContent: "space-between",
+            borderBottom: "1px solid #eee",
+            padding: "6px 0"
+          }}>
+            <span style={{ color: "#666" }}>{key}</span>
+            <span style={{ fontWeight: "500" }}>{value}</span>
+          </div>
+        ))}
       </div>
+    </>
+  )}
+
+</div>
 
       {/* RELATED PRODUCTS */}
       <div style={{ marginTop: "25px" }}>
