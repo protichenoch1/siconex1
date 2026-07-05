@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { products } from "../../../data/products";
-import { addToCart } from "../../../lib/cart";
 import AddToCartButton from "../../../components/AddToCartButton";
 
 export default function ProductPage() {
