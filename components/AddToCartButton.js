@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { addToCart, getCart } from "../../../lib/cart";
+import { addToCart, getCart } from "../lib/cart";
 
 export default function AddToCartButton({ product }) {
   const [loading, setLoading] = useState(false);
