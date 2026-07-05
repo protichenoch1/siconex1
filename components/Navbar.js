@@ -6,15 +6,27 @@ import { getCartCount } from "../lib/cart";
 
 export default function Navbar() {
   const [count, setCount] = useState(0);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const update = () => setCount(getCartCount());
+  const updateCart = () => setCount(getCartCount());
 
-    update(); // initial load
-    window.addEventListener("cartUpdated", update);
+  const updateUser = () => {
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(savedUser);
+  };
 
-    return () => window.removeEventListener("cartUpdated", update);
-  }, []);
+  updateCart();
+  updateUser();
+
+  window.addEventListener("cartUpdated", updateCart);
+  window.addEventListener("storage", updateUser);
+
+  return () => {
+    window.removeEventListener("cartUpdated", updateCart);
+    window.removeEventListener("storage", updateUser);
+  };
+}, []);
 
   return (
     <div className="header">
@@ -30,11 +42,28 @@ export default function Navbar() {
 
           {/* ACCOUNT ICON */}
           <Link href="/account" className="icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="8" r="4" stroke="#0a8f3c" strokeWidth="2"/>
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#0a8f3c" strokeWidth="2"/>
-            </svg>
-          </Link>
+  {user ? (
+    <div style={{
+      width: "28px",
+      height: "28px",
+      borderRadius: "50%",
+      background: "#0a8f3c",
+      color: "#fff",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: "12px",
+      fontWeight: "bold"
+    }}>
+      {user.name.charAt(0)}
+    </div>
+  ) : (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="8" r="4" stroke="#0a8f3c" strokeWidth="2"/>
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#0a8f3c" strokeWidth="2"/>
+    </svg>
+  )}
+</Link>
 
           {/* CART ICON */}
           <Link href="/cart" className="icon" style={{ position: "relative" }}>
