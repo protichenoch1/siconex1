@@ -1,38 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function OrdersPage() {
   const [tab, setTab] = useState("ongoing");
-  const router = useRouter(); // ✅ ADD THIS
+  const [allOrders, setAllOrders] = useState([]);
+  const router = useRouter();
 
-  const ongoingOrders = [
-    {
-      id: 1,
-      name: "Samsung Galaxy A14",
-      price: "KES 23,500",
-      status: "Ready for pickup",
-      image: "/phone.jpg",
-    },
-    {
-      id: 2,
-      name: "JBL Speaker",
-      price: "KES 9,800",
-      status: "On the way",
-      image: "/speaker.jpg",
-    },
-  ];
+  // ✅ Load real orders from checkout
+  useEffect(() => {
+    const savedOrders =
+      JSON.parse(localStorage.getItem("orders")) || [];
 
-  const deliveredOrders = [
-    {
-      id: 3,
-      name: "HP Laptop",
-      price: "KES 67,000",
-      status: "Delivered",
-      image: "/laptop.jpg",
-    },
-  ];
+    const formatted = savedOrders.flatMap((order) =>
+      order.items.map((item) => ({
+        id: order.id,
+        name: item.name,
+        price: `KES ${item.price.toLocaleString()}`,
+        image: item.image,
+        status: order.status || "On the way",
+      }))
+    );
+
+    setAllOrders(formatted);
+  }, []);
+
+  const ongoingOrders = allOrders.filter(
+    (o) => o.status !== "Delivered"
+  );
+
+  const deliveredOrders = allOrders.filter(
+    (o) => o.status === "Delivered"
+  );
 
   const orders = tab === "ongoing" ? ongoingOrders : deliveredOrders;
 
@@ -58,7 +58,6 @@ export default function OrdersPage() {
     );
   };
 
-  // ✅ UPDATED CARD (clickable)
   const Card = ({ item }) => (
     <div
       onClick={() => router.push(`/account/orders/${item.id}`)}
@@ -161,4 +160,4 @@ export default function OrdersPage() {
       </div>
     </div>
   );
-}
+        }
