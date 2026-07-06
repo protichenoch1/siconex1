@@ -15,10 +15,17 @@ export default function CheckoutPage() {
     setCart(savedCart);
 
     const defaultAddr = addresses.find((a) => a.isDefault);
-    setAddress(defaultAddr || addresses[0]);
+    setAddress(defaultAddr || addresses[0] || null);
   }, []);
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  // ✅ FIXED TOTALS (supports qty)
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * (item.qty || 1),
+    0
+  );
+
+  const delivery = 150;
+  const total = subtotal + delivery;
 
   const placeOrder = () => {
     if (!address) {
@@ -36,10 +43,12 @@ export default function CheckoutPage() {
     const newOrder = {
       id: Date.now(),
       items: cart,
+      subtotal,
+      delivery,
       total,
       address,
       payment,
-      status: "Ordered",
+      status: "On the way", // ✅ better status
       date: new Date().toLocaleString(),
     };
 
@@ -47,8 +56,6 @@ export default function CheckoutPage() {
     localStorage.removeItem("cart");
 
     alert("Order placed successfully!");
-
-    // optional redirect
     window.location.href = "/account/orders";
   };
 
@@ -77,10 +84,16 @@ export default function CheckoutPage() {
         {cart.map((item) => (
           <div key={item.id} style={itemRow}>
             <img src={item.image} style={img} />
-            <div>
+
+            <div style={{ flex: 1 }}>
               <div>{item.name}</div>
+
+              <div style={{ color: "#777", fontSize: "13px" }}>
+                Qty: {item.qty || 1}
+              </div>
+
               <div style={{ color: "#777" }}>
-                KES {item.price.toLocaleString()}
+                KES {(item.price * (item.qty || 1)).toLocaleString()}
               </div>
             </div>
           </div>
@@ -101,12 +114,34 @@ export default function CheckoutPage() {
           current={payment}
           set={setPayment}
         />
+        <Option
+          label="Pay on Delivery"
+          value="cod"
+          current={payment}
+          set={setPayment}
+        />
       </Section>
 
       {/* TOTAL */}
       <div style={totalBox}>
-        <div>Total</div>
-        <b>KES {total.toLocaleString()}</b>
+        <div style={{ width: "100%" }}>
+          <div style={row}>
+            <span>Subtotal</span>
+            <span>KES {subtotal.toLocaleString()}</span>
+          </div>
+
+          <div style={row}>
+            <span>Delivery</span>
+            <span>KES {delivery.toLocaleString()}</span>
+          </div>
+
+          <hr />
+
+          <div style={{ ...row, fontWeight: "bold" }}>
+            <span>Total</span>
+            <span>KES {total.toLocaleString()}</span>
+          </div>
+        </div>
       </div>
 
       {/* BUTTON */}
@@ -181,8 +216,12 @@ const totalBox = {
   margin: "10px",
   padding: "15px",
   borderRadius: "8px",
+};
+
+const row = {
   display: "flex",
   justifyContent: "space-between",
+  marginBottom: "6px",
 };
 
 const btn = {
