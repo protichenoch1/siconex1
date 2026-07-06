@@ -15,32 +15,47 @@ export default function DetailsPage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
-  // Load user
+  // ✅ Load user safely
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) setForm(user);
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        setForm((prev) => ({
+          ...prev,
+          ...user,
+        }));
+      }
+    } catch (err) {
+      console.error("Invalid user data");
+    }
   }, []);
 
+  // ✅ Handle input change
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // 📸 Image upload (base64)
+  // ✅ Image upload
   const handleImage = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setForm({ ...form, avatar: reader.result });
+      setForm((prev) => ({
+        ...prev,
+        avatar: reader.result,
+      }));
     };
     reader.readAsDataURL(file);
   };
 
-  // 📱 Phone formatter
+  // ✅ Phone formatter (Kenya)
   const formatPhone = (phone) => {
     let digits = phone.replace(/\D/g, "");
 
@@ -55,10 +70,10 @@ export default function DetailsPage() {
     return phone;
   };
 
+  // ✅ Save details
   const saveDetails = () => {
     setError("");
 
-    // ❌ Validation: must be 10 digits (07XXXXXXXX)
     const digits = form.phone.replace(/\D/g, "");
 
     if (digits.length !== 10 || !digits.startsWith("0")) {
@@ -66,17 +81,16 @@ export default function DetailsPage() {
       return;
     }
 
-    const formattedPhone = formatPhone(form.phone);
-
     const updatedUser = {
       ...form,
-      phone: formattedPhone,
+      phone: formatPhone(form.phone),
     };
 
     localStorage.setItem("user", JSON.stringify(updatedUser));
-    setForm(updatedUser);
 
+    setForm(updatedUser);
     setSaved(true);
+
     setTimeout(() => setSaved(false), 2000);
   };
 
@@ -92,6 +106,7 @@ export default function DetailsPage() {
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
           <img
             src={form.avatar || "/avatar.png"}
+            alt="profile"
             style={{
               width: "90px",
               height: "90px",
@@ -110,11 +125,11 @@ export default function DetailsPage() {
         <Input label="Middle Name" name="middleName" value={form.middleName} onChange={handleChange} />
         <Input label="Last Name" name="lastName" value={form.lastName} onChange={handleChange} />
 
-        {/* EMAIL (READONLY) */}
+        {/* EMAIL */}
         <div style={{ marginBottom: "15px" }}>
           <label style={labelStyle}>Email</label>
           <input
-            value={form.email}
+            value={form.email || ""}
             readOnly
             style={{ ...inputStyle, background: "#eee", color: "#777" }}
           />
@@ -138,14 +153,14 @@ export default function DetailsPage() {
   );
 }
 
-// 🔹 Input component
+// ✅ Reusable Input
 function Input({ label, name, value, onChange }) {
   return (
     <div style={{ marginBottom: "15px" }}>
       <label style={labelStyle}>{label}</label>
       <input
         name={name}
-        value={value}
+        value={value || ""}
         onChange={onChange}
         style={inputStyle}
       />
