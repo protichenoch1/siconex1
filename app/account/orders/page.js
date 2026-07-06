@@ -1,135 +1,159 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function OrdersPage() {
   const [tab, setTab] = useState("ongoing");
-  const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    setOrders(savedOrders);
-  }, []);
+  const ongoingOrders = [
+    {
+      id: 1,
+      name: "Samsung Galaxy A14",
+      price: "$180",
+      status: "Ready for pickup",
+      image: "/phone.jpg",
+    },
+    {
+      id: 2,
+      name: "JBL Speaker",
+      price: "$75",
+      status: "Processing",
+      image: "/speaker.jpg",
+    },
+  ];
 
-  const ongoing = orders.filter(o => o.status === "ongoing");
-  const delivered = orders.filter(o => o.status === "delivered");
+  const deliveredOrders = [
+    {
+      id: 3,
+      name: "HP Laptop",
+      price: "$520",
+      status: "Delivered",
+      image: "/laptop.jpg",
+    },
+  ];
 
-  const markAsDelivered = (id) => {
-    const updated = orders.map(order =>
-      order.id === id ? { ...order, status: "delivered" } : order
+  const orders = tab === "ongoing" ? ongoingOrders : deliveredOrders;
+
+  const StatusBadge = ({ status }) => {
+    let color = "#999";
+
+    if (status === "Delivered") color = "green";
+    if (status === "Processing") color = "orange";
+    if (status === "Ready for pickup") color = "#0a8f3c";
+
+    return (
+      <span
+        style={{
+          fontSize: "12px",
+          color: "#fff",
+          background: color,
+          padding: "4px 8px",
+          borderRadius: "4px",
+        }}
+      >
+        {status}
+      </span>
     );
-
-    localStorage.setItem("orders", JSON.stringify(updated));
-    setOrders(updated);
   };
 
-  const list = tab === "ongoing" ? ongoing : delivered;
+  const Card = ({ item }) => (
+    <div
+      style={{
+        display: "flex",
+        gap: "10px",
+        padding: "12px",
+        borderBottom: "1px solid #eee",
+        background: "#fff",
+      }}
+    >
+      <img
+        src={item.image}
+        alt=""
+        style={{
+          width: "70px",
+          height: "70px",
+          objectFit: "cover",
+          borderRadius: "6px",
+        }}
+      />
+
+      <div style={{ flex: 1 }}>
+        <div style={{ fontWeight: "600" }}>{item.name}</div>
+        <div style={{ fontSize: "13px", color: "#777" }}>
+          {item.price}
+        </div>
+
+        <div style={{ marginTop: "6px" }}>
+          <StatusBadge status={item.status} />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <div style={{ padding: "15px", background: "#f5f5f5", minHeight: "100vh" }}>
+    <div style={{ background: "#f5f5f5", minHeight: "100vh" }}>
       
-      <h2>My Orders</h2>
+      {/* HEADER */}
+      <div
+        style={{
+          background: "#0a8f3c",
+          color: "#fff",
+          padding: "16px",
+          fontWeight: "bold",
+        }}
+      >
+        My Orders
+      </div>
 
       {/* TABS */}
-      <div style={{
-        display: "flex",
-        marginTop: "15px",
-        background: "#fff",
-        borderRadius: "8px",
-        overflow: "hidden"
-      }}>
-        <button
+      <div
+        style={{
+          display: "flex",
+          background: "#fff",
+          borderBottom: "1px solid #ddd",
+        }}
+      >
+        <div
           onClick={() => setTab("ongoing")}
           style={{
             flex: 1,
+            textAlign: "center",
             padding: "12px",
-            border: "none",
-            background: tab === "ongoing" ? "#0a8f3c" : "#fff",
-            color: tab === "ongoing" ? "#fff" : "#333",
-            fontWeight: "bold"
+            cursor: "pointer",
+            borderBottom:
+              tab === "ongoing" ? "3px solid #0a8f3c" : "none",
+            fontWeight: tab === "ongoing" ? "600" : "normal",
           }}
         >
           Ongoing
-        </button>
+        </div>
 
-        <button
+        <div
           onClick={() => setTab("delivered")}
           style={{
             flex: 1,
+            textAlign: "center",
             padding: "12px",
-            border: "none",
-            background: tab === "delivered" ? "#0a8f3c" : "#fff",
-            color: tab === "delivered" ? "#fff" : "#333",
-            fontWeight: "bold"
+            cursor: "pointer",
+            borderBottom:
+              tab === "delivered" ? "3px solid #0a8f3c" : "none",
+            fontWeight: tab === "delivered" ? "600" : "normal",
           }}
         >
           Delivered
-        </button>
+        </div>
       </div>
 
       {/* LIST */}
-      <div style={{ marginTop: "15px" }}>
-        {list.length === 0 ? (
-          <p style={{ color: "#777" }}>No orders here</p>
+      <div style={{ marginTop: "10px" }}>
+        {orders.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "40px", color: "#777" }}>
+            No orders here
+          </div>
         ) : (
-          list.map(order => (
-            <div
-              key={order.id}
-              style={{
-                background: "#fff",
-                padding: "12px",
-                borderRadius: "10px",
-                marginBottom: "10px",
-                border: "1px solid #eee"
-              }}
-            >
-              <div style={{ display: "flex", gap: "10px" }}>
-                <img
-                  src={order.image}
-                  style={{
-                    width: "70px",
-                    height: "70px",
-                    objectFit: "contain"
-                  }}
-                />
-
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: "14px", fontWeight: "500" }}>
-                    {order.name}
-                  </p>
-
-                  <p style={{ color: "#0a8f3c", fontWeight: "bold" }}>
-                    KES {order.price}
-                  </p>
-
-                  <p style={{ fontSize: "12px", color: "#777" }}>
-                    Qty: {order.quantity}
-                  </p>
-                </div>
-              </div>
-
-              {/* ACTION */}
-              {tab === "ongoing" && (
-                <button
-                  onClick={() => markAsDelivered(order.id)}
-                  style={{
-                    marginTop: "10px",
-                    width: "100%",
-                    padding: "10px",
-                    background: "#0a8f3c",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "6px"
-                  }}
-                >
-                  Mark as Received
-                </button>
-              )}
-            </div>
-          ))
+          orders.map((item) => <Card key={item.id} item={item} />)
         )}
       </div>
-
     </div>
   );
-                }
+}
