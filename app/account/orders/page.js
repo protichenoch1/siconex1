@@ -9,15 +9,15 @@ export default function OrdersPage() {
     {
       id: 1,
       name: "Samsung Galaxy A14",
-      price: "$180",
+      price: "KES 23,500",
       status: "Ready for pickup",
       image: "/phone.jpg",
     },
     {
       id: 2,
       name: "JBL Speaker",
-      price: "$75",
-      status: "Processing",
+      price: "KES 9,800",
+      status: "On the way",
       image: "/speaker.jpg",
     },
   ];
@@ -26,7 +26,7 @@ export default function OrdersPage() {
     {
       id: 3,
       name: "HP Laptop",
-      price: "$520",
+      price: "KES 67,000",
       status: "Delivered",
       image: "/laptop.jpg",
     },
@@ -38,7 +38,7 @@ export default function OrdersPage() {
     let color = "#999";
 
     if (status === "Delivered") color = "green";
-    if (status === "Processing") color = "orange";
+    if (status === "On the way") color = "orange";
     if (status === "Ready for pickup") color = "#0a8f3c";
 
     return (
@@ -156,4 +156,4 @@ export default function OrdersPage() {
       </div>
     </div>
   );
-}
+          }
