@@ -45,7 +45,7 @@ export default function AccountPage() {
       }}>
 
         {[
-          "My Orders",
+          <Link href="/account/orders">My Orders</Link>,
           "Saved Items",
           "My Details",
           "Address Book",
