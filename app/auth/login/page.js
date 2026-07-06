@@ -6,40 +6,87 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const formatPhone = (phone) => {
+    let digits = phone.replace(/\D/g, "");
+
+    if (digits.startsWith("0")) {
+      return "+254" + digits.slice(1);
+    }
+
+    if (digits.startsWith("254")) {
+      return "+" + digits;
+    }
+
+    return phone;
+  };
 
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    setError("");
 
-    if (error) {
-      alert(error.message);
-      return;
+    if (!phone || !password) {
+      return setError("Enter phone and password");
     }
+
+    const formattedPhone = formatPhone(phone);
+
+    // 🔍 get user
+    const { data: user, error: dbError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("phone", formattedPhone)
+      .single();
+
+    if (dbError || !user) {
+      return setError("User not found");
+    }
+
+    // 🔐 compare password
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return setError("Incorrect password");
+    }
+
+    // ✅ save session
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        id: user.id,
+        phone: user.phone,
+        name: user.first_name,
+      })
+    );
 
     router.push("/");
   };
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={{ padding: 20, maxWidth: 400 }}>
       <h2>Login</h2>
 
       <input
-        type="email"
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-      /><br /><br />
+        placeholder="Phone (07XXXXXXXX)"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+      />
+      <br /><br />
 
       <input
         type="password"
         placeholder="Password"
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
-      /><br /><br />
+      />
+      <br /><br />
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <button onClick={handleLogin}>Login</button>
     </div>
   );
-}
+          }
