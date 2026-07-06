@@ -21,7 +21,7 @@ export default function AccountPage() {
     { title: "My Orders", path: "/account/orders" },
     { title: "Saved Items", path: "/account/saved" },
     { title: "My Details", path: "/account/details" },
-    { title: "Address Book", path: "/account/address" },
+    { title: "Address Book", path: "/account/addresses" },
     { title: "Payment Methods", path: "/account/payments" },
     { title: "Help Center", path: "/help" },
   ];
