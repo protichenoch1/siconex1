@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { supabase } from "../../../lib/supabase";
-import bcrypt from "bcryptjs";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
