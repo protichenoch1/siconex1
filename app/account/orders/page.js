@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function OrdersPage() {
   const [tab, setTab] = useState("ongoing");
+  const router = useRouter(); // ✅ ADD THIS
 
   const ongoingOrders = [
     {
@@ -56,14 +58,17 @@ export default function OrdersPage() {
     );
   };
 
+  // ✅ UPDATED CARD (clickable)
   const Card = ({ item }) => (
     <div
+      onClick={() => router.push(`/account/orders/${item.id}`)}
       style={{
         display: "flex",
         gap: "10px",
         padding: "12px",
         borderBottom: "1px solid #eee",
         background: "#fff",
+        cursor: "pointer",
       }}
     >
       <img
@@ -156,4 +161,4 @@ export default function OrdersPage() {
       </div>
     </div>
   );
-          }
+}
