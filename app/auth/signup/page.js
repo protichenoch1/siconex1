@@ -2,14 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function SignupPage() {
+export default function Signup() {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    first_name: "",
-    middle_name: "",
-    last_name: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     phone: "",
     email: "",
     password: "",
@@ -20,51 +21,45 @@ export default function SignupPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = () => {
-    if (form.password.length < 6) {
-      alert("Password must be at least 6 characters");
-      return;
-    }
+  const handleSignup = (e) => {
+    e.preventDefault();
 
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    const user = {
-      first_name: form.first_name,
-      middle_name: form.middle_name,
-      last_name: form.last_name,
-      phone: form.phone,
-      email: form.email,
-      password: form.password
+    const userData = {
+      name: form.firstName + " " + form.lastName,
+      email: form.email
     };
 
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(userData));
 
     router.push("/account");
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Create Account</h2>
+    <div className="auth-container">
+      <form className="auth-card" onSubmit={handleSignup}>
+        
+        <h2>Create Account</h2>
+        <p className="subtitle">Sign up to continue</p>
 
-      <input name="first_name" placeholder="First Name" onChange={handleChange} /><br />
-      <input name="middle_name" placeholder="Middle Name (optional)" onChange={handleChange} /><br />
-      <input name="last_name" placeholder="Last Name" onChange={handleChange} /><br />
-      <input name="phone" placeholder="Phone Number" onChange={handleChange} /><br />
-      <input name="email" placeholder="Email" onChange={handleChange} /><br />
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} /><br />
-      <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} /><br />
+        <input name="firstName" placeholder="First Name" onChange={handleChange} required />
+        <input name="middleName" placeholder="Middle Name (optional)" onChange={handleChange} />
+        <input name="lastName" placeholder="Last Name" onChange={handleChange} required />
+        <input name="phone" placeholder="Phone Number" onChange={handleChange} required />
+        <input name="email" type="email" placeholder="Email Address" onChange={handleChange} required />
+        <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+        <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} required />
 
-      <button onClick={handleSignup}>SIGN UP</button>
+        <button type="submit">CREATE ACCOUNT</button>
 
-      <p>
-        Already have an account?{" "}
-        <span onClick={() => router.push("/auth/login")} style={{ color: "blue", cursor: "pointer" }}>
-          Login
-        </span>
-      </p>
+        <p className="switch">
+          Already have an account? <Link href="/auth/login">Login</Link>
+        </p>
+      </form>
     </div>
   );
-  }
+    }
