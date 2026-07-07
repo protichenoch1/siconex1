@@ -1,74 +1,56 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "../../../lib/supabase";
 import { useRouter } from "next/navigation";
 
-export default function Login() {
+export default function LoginPage() {
   const router = useRouter();
 
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const formatPhone = (phone) => {
-    let digits = phone.replace(/\D/g, "");
+  const handleLogin = () => {
+    const saved = localStorage.getItem("user");
 
-    if (digits.startsWith("0")) return "+254" + digits.slice(1);
-    if (digits.startsWith("254")) return "+" + digits;
-
-    return phone;
-  };
-
-  const handleLogin = async () => {
-    setError("");
-
-    if (!phone || !password) {
-      return setError("Enter phone and password");
+    if (!saved) {
+      alert("No account found");
+      return;
     }
 
-    const formattedPhone = formatPhone(phone);
+    const user = JSON.parse(saved);
 
-    // ✅ match phone + password directly
-    const { data: user, error: dbError } = await supabase
-      .from("users")
-      .select("*")
-      .eq("phone", formattedPhone)
-      .eq("password", password)
-      .single();
-
-    if (dbError || !user) {
-      return setError("Invalid phone or password");
+    if (user.phone === phone && user.password === password) {
+      router.push("/account");
+    } else {
+      alert("Invalid credentials");
     }
-
-    // ✅ store FULL user
-    localStorage.setItem("user", JSON.stringify(user));
-
-    router.push("/account");
   };
 
   return (
-    <div style={{ padding: 20, maxWidth: 400 }}>
+    <div style={{ padding: 20 }}>
       <h2>Login</h2>
 
       <input
-        placeholder="Phone (07XXXXXXXX)"
+        placeholder="Phone Number"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-      />
-      <br /><br />
+      /><br />
 
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+      /><br />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <button onClick={handleLogin}>LOGIN</button>
 
-      <button onClick={handleLogin}>Login</button>
+      <p>
+        Don’t have an account?{" "}
+        <span onClick={() => router.push("/auth/signup")} style={{ color: "blue", cursor: "pointer" }}>
+          Sign Up
+        </span>
+      </p>
     </div>
   );
           }
