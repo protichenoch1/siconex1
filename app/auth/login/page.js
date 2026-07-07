@@ -14,13 +14,8 @@ export default function Login() {
   const formatPhone = (phone) => {
     let digits = phone.replace(/\D/g, "");
 
-    if (digits.startsWith("0")) {
-      return "+254" + digits.slice(1);
-    }
-
-    if (digits.startsWith("254")) {
-      return "+" + digits;
-    }
+    if (digits.startsWith("0")) return "+254" + digits.slice(1);
+    if (digits.startsWith("254")) return "+" + digits;
 
     return phone;
   };
@@ -34,35 +29,22 @@ export default function Login() {
 
     const formattedPhone = formatPhone(phone);
 
-    // 🔍 get user
+    // ✅ match phone + password directly
     const { data: user, error: dbError } = await supabase
       .from("users")
       .select("*")
       .eq("phone", formattedPhone)
+      .eq("password", password)
       .single();
 
     if (dbError || !user) {
-      return setError("User not found");
+      return setError("Invalid phone or password");
     }
 
-    // 🔐 compare password
-    const match = await bcrypt.compare(password, user.password);
+    // ✅ store FULL user
+    localStorage.setItem("user", JSON.stringify(user));
 
-    if (!match) {
-      return setError("Incorrect password");
-    }
-
-    // ✅ save session
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        id: user.id,
-        phone: user.phone,
-        name: user.first_name,
-      })
-    );
-
-    router.push("/");
+    router.push("/account");
   };
 
   return (
