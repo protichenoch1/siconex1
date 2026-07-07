@@ -2,55 +2,66 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function LoginPage() {
+export default function Login() {
   const router = useRouter();
 
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
 
-  const handleLogin = () => {
-    const saved = localStorage.getItem("user");
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-    if (!saved) {
-      alert("No account found");
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if (!storedUser) {
+      alert("No account found. Please sign up.");
       return;
     }
 
-    const user = JSON.parse(saved);
-
-    if (user.phone === phone && user.password === password) {
+    if (form.email === storedUser.email) {
       router.push("/account");
     } else {
-      alert("Invalid credentials");
+      alert("Invalid email");
     }
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Login</h2>
+    <div className="auth-container">
+      <form className="auth-card" onSubmit={handleLogin}>
+        
+        <h2>Welcome Back</h2>
+        <p className="subtitle">Login to your account</p>
 
-      <input
-        placeholder="Phone Number"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-      /><br />
+        <input
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          onChange={handleChange}
+          required
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      /><br />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
 
-      <button onClick={handleLogin}>LOGIN</button>
+        <button type="submit">LOGIN</button>
 
-      <p>
-        Don’t have an account?{" "}
-        <span onClick={() => router.push("/auth/signup")} style={{ color: "blue", cursor: "pointer" }}>
-          Sign Up
-        </span>
-      </p>
+        <p className="switch">
+          Don’t have an account? <Link href="/auth/signup">Sign up</Link>
+        </p>
+      </form>
     </div>
   );
-          }
+    }
