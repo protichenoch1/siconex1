@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
-export default function AccountPage() {
+function AccountContent() {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
@@ -14,7 +15,7 @@ export default function AccountPage() {
 
   const logout = () => {
     localStorage.removeItem("user");
-    setUser(null);
+    router.replace("/login");
   };
 
   const menuItems = [
@@ -40,13 +41,9 @@ export default function AccountPage() {
       >
         <h3>My Account</h3>
 
-        {user ? (
+        {user && (
           <p style={{ color: "#555" }}>
             {user.name} • {user.email}
-          </p>
-        ) : (
-          <p style={{ color: "#555" }}>
-            Welcome! Please login
           </p>
         )}
       </div>
@@ -79,50 +76,33 @@ export default function AccountPage() {
         ))}
       </div>
 
-      {/* LOGIN / LOGOUT */}
+      {/* LOGOUT */}
       <div style={{ marginTop: "20px" }}>
-        {!user ? (
-          <button
-            onClick={() => {
-              const fakeUser = {
-                name: "Aaron Bett",
-                email: "aaron@email.com"
-              };
-              localStorage.setItem("user", JSON.stringify(fakeUser));
-              setUser(fakeUser);
-            }}
-            style={{
-              width: "100%",
-              padding: "14px",
-              background: "#0a8f3c",
-              color: "#fff",
-              border: "none",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}
-          >
-            LOGIN
-          </button>
-        ) : (
-          <button
-            onClick={logout}
-            style={{
-              width: "100%",
-              padding: "14px",
-              background: "#e53935",
-              color: "#fff",
-              border: "none",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}
-          >
-            LOGOUT
-          </button>
-        )}
+        <button
+          onClick={logout}
+          style={{
+            width: "100%",
+            padding: "14px",
+            background: "#e53935",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}
+        >
+          LOGOUT
+        </button>
       </div>
 
     </div>
   );
-              }
+}
+
+export default function AccountPage() {
+  return (
+    <ProtectedRoute>
+      <AccountContent />
+    </ProtectedRoute>
+  );
+}
