@@ -365,3 +365,66 @@ body {
   font-size: 12px;
   margin-bottom: 2px;
 }
+
+/* AUTH PAGE */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.auth-card h2 {
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.auth-card input:focus {
+  outline: none;
+  border-color: #0a8f3c;
+}
+
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  background: #0a8f3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.auth-card button:hover {
+  background: #087a32;
+}
+
+.switch {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  }
