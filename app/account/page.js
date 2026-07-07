@@ -9,8 +9,15 @@ function AccountContent() {
   const router = useRouter();
 
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("user"));
-    if (savedUser) setUser(savedUser);
+    const saved = localStorage.getItem("user");
+
+    if (saved) {
+      try {
+        setUser(JSON.parse(saved));
+      } catch {
+        localStorage.removeItem("user");
+      }
+    }
   }, []);
 
   const logout = () => {
@@ -41,10 +48,12 @@ function AccountContent() {
       >
         <h3>My Account</h3>
 
-        {user && (
+        {user ? (
           <p style={{ color: "#555" }}>
-            {user.name} • {user.email}
+            {user.first_name} {user.last_name} • {user.email}
           </p>
+        ) : (
+          <p style={{ color: "#999" }}>Loading...</p>
         )}
       </div>
 
@@ -105,4 +114,4 @@ export default function AccountPage() {
       <AccountContent />
     </ProtectedRoute>
   );
-}
+        }
