@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ProtectedRoute from "../components/ProtectedRoute";
 
-function AccountContent() {
+export default function AccountPage() {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
@@ -22,96 +21,102 @@ function AccountContent() {
 
   const logout = () => {
     localStorage.removeItem("user");
-    router.replace("/login");
+    setUser(null);
   };
 
-  const menuItems = [
-    { title: "My Orders", path: "/account/orders" },
-    { title: "Saved Items", path: "/account/saved" },
-    { title: "My Details", path: "/account/details" },
-    { title: "Address Book", path: "/account/addresses" },
-    { title: "Payment Methods", path: "/account/payments" },
-    { title: "Help Center", path: "/help" },
-  ];
+  // ❌ NOT LOGGED IN
+  if (!user) {
+    return (
+      <div style={{ padding: 20 }}>
+        <h2>My Account</h2>
 
-  return (
-    <div style={{ padding: "15px", background: "#f5f5f5", minHeight: "100vh" }}>
-      
-      {/* HEADER */}
-      <div
-        style={{
+        <div style={{
           background: "#fff",
-          padding: "15px",
-          borderRadius: "10px",
-          marginBottom: "15px"
-        }}
-      >
-        <h3>My Account</h3>
+          padding: 20,
+          borderRadius: 10,
+          textAlign: "center"
+        }}>
+          <p>Welcome! Please sign in</p>
 
-        {user ? (
-          <p style={{ color: "#555" }}>
-            {user.first_name} {user.last_name} • {user.email}
-          </p>
-        ) : (
-          <p style={{ color: "#999" }}>Loading...</p>
-        )}
-      </div>
-
-      {/* MENU */}
-      <div
-        style={{
-          background: "#fff",
-          borderRadius: "10px",
-          overflow: "hidden"
-        }}
-      >
-        {menuItems.map((item, index) => (
-          <div
-            key={index}
-            onClick={() => router.push(item.path)}
+          <button
+            onClick={() => router.push("/auth/login")}
             style={{
-              padding: "14px",
-              borderBottom: "1px solid #eee",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontSize: "14px",
-              cursor: "pointer"
+              width: "100%",
+              padding: 12,
+              background: "#f68b1e",
+              color: "#fff",
+              border: "none",
+              marginTop: 10
             }}
           >
-            <span>{item.title}</span>
-            <span style={{ color: "#999" }}>›</span>
+            LOGIN
+          </button>
+
+          <button
+            onClick={() => router.push("/auth/signup")}
+            style={{
+              width: "100%",
+              padding: 12,
+              marginTop: 10
+            }}
+          >
+            CREATE ACCOUNT
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ LOGGED IN
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>My Account</h2>
+
+      <div style={{
+        background: "#fff",
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 15
+      }}>
+        <p><strong>{user.first_name} {user.last_name}</strong></p>
+        <p>{user.email}</p>
+        <p>{user.phone}</p>
+      </div>
+
+      <div style={{ background: "#fff", borderRadius: 10 }}>
+        {[
+          "My Orders",
+          "Saved Items",
+          "My Details",
+          "Address Book",
+          "Payment Methods",
+          "Help Center"
+        ].map((item, i) => (
+          <div
+            key={i}
+            style={{
+              padding: 15,
+              borderBottom: "1px solid #eee"
+            }}
+          >
+            {item}
           </div>
         ))}
       </div>
 
-      {/* LOGOUT */}
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={logout}
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: "#e53935",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}
-        >
-          LOGOUT
-        </button>
-      </div>
-
+      <button
+        onClick={logout}
+        style={{
+          marginTop: 20,
+          width: "100%",
+          padding: 12,
+          background: "#e53935",
+          color: "#fff",
+          border: "none"
+        }}
+      >
+        LOGOUT
+      </button>
     </div>
   );
-}
-
-export default function AccountPage() {
-  return (
-    <ProtectedRoute>
-      <AccountContent />
-    </ProtectedRoute>
-  );
-        }
+    }
