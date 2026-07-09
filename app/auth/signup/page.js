@@ -78,9 +78,14 @@ export default function Signup() {
 
         <button type="submit">CREATE ACCOUNT</button>
 
-        <p className="switch">
-          Already have an account? <Link href="/auth/login">Login</Link>
-        </p>
+        <div className="auth-footer">
+  <p>Already have an account?</p>
+  <Link href="/auth/login">
+    <button type="button" className="secondary-btn">
+      LOGIN HERE
+    </button>
+  </Link>
+</div>
       </form>
     </div>
   );
