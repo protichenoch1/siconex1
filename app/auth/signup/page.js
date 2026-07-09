@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { supabase } from "../../../lib/supabase";
-import bcrypt from "bcryptjs";
+import { supabase } from "@/lib/supabase";
 
 export default function Signup() {
   const router = useRouter();
@@ -31,10 +30,7 @@ export default function Signup() {
       return;
     }
 
-    // 🔐 HASH PASSWORD
-    const hashedPassword = await bcrypt.hash(form.password, 10);
-
-    // 💾 SAVE TO DATABASE
+    // 💾 SAVE TO DATABASE (plain password)
     const { data, error } = await supabase
       .from("users")
       .insert([
@@ -44,7 +40,7 @@ export default function Signup() {
           last_name: form.lastName,
           phone_number: form.phone,
           email: form.email,
-          password: hashedPassword
+          password: form.password
         }
       ])
       .select()
