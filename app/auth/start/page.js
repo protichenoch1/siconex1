@@ -10,6 +10,7 @@ export default function StartPage() {
     lastName: "",
     phone: "",
     email: "",
+    password: "", // ✅ added
   });
 
   const [loading, setLoading] = useState(false);
@@ -18,8 +19,19 @@ export default function StartPage() {
     if (loading) return;
 
     // ✅ Validation
-    if (!form.firstName || !form.lastName || !form.phone || !form.email) {
+    if (
+      !form.firstName ||
+      !form.lastName ||
+      !form.phone ||
+      !form.email ||
+      !form.password
+    ) {
       alert("Fill all required fields");
+      return;
+    }
+
+    if (form.password.length < 6) {
+      alert("Password must be at least 6 characters");
       return;
     }
 
@@ -45,10 +57,8 @@ export default function StartPage() {
         .eq("phone", phone)
         .maybeSingle();
 
-      // ✅ If exists → login
       if (existingUser) {
-        localStorage.setItem("user", JSON.stringify(existingUser));
-        window.location.href = "/checkout";
+        alert("User already exists. Please login.");
         return;
       }
 
@@ -62,6 +72,7 @@ export default function StartPage() {
             last_name: form.lastName.trim(),
             phone,
             email: form.email.trim(),
+            password: form.password, // ✅ added
           },
         ])
         .select()
@@ -69,7 +80,7 @@ export default function StartPage() {
 
       if (error) {
         console.error(error);
-        alert("Error creating account");
+        alert(error.message); // 🔥 show real error
         return;
       }
 
@@ -135,6 +146,16 @@ export default function StartPage() {
           }
         />
 
+        {/* ✅ PASSWORD FIELD */}
+        <input
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={(e) =>
+            setForm({ ...form, password: e.target.value })
+          }
+        />
+
         <button onClick={handleContinue} disabled={loading}>
           {loading ? "Please wait..." : "Continue"}
         </button>
@@ -142,4 +163,4 @@ export default function StartPage() {
       </div>
     </div>
   );
-    }
+        }
