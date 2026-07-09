@@ -9,9 +9,11 @@ export default function Login() {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    email: "",
+    phone: "",
     password: ""
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,37 +22,59 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!form.email || !form.password) {
-      alert("Enter email and password");
+    if (!form.phone || !form.password) {
+      alert("Enter phone and password");
       return;
     }
 
-    // 🔍 Get user from database
-    const { data, error } = await supabase
-      .from("users")
-      .select("*")
-      .eq("email", form.email)
-      .single();
+    // ✅ Format Kenya phone
+    let phone = form.phone.trim();
 
-    if (error || !data) {
-      alert("User not found");
+    if (phone.startsWith("07")) {
+      phone = "+254" + phone.slice(1);
+    }
+
+    if (!phone.startsWith("+254")) {
+      alert("Enter a valid Kenyan phone number");
       return;
     }
 
-    // 🔐 Check password
-    if (data.password !== form.password) {
-      alert("Incorrect password");
-      return;
+    try {
+      setLoading(true);
+
+      // 🔍 Get user from database
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("phone", phone)
+        .single();
+
+      if (error || !data) {
+        alert("User not found");
+        return;
+      }
+
+      // 🔐 Check password
+      if (data.password !== form.password) {
+        alert("Incorrect password");
+        return;
+      }
+
+      // ✅ Save session
+      localStorage.setItem("user", JSON.stringify(data));
+
+      // 🔔 Update navbar
+      window.dispatchEvent(new Event("userUpdated"));
+
+      // 🚀 Redirect
+      router.push("/account");
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
-
-    // ✅ Save session locally
-    localStorage.setItem("user", JSON.stringify(data));
-
-    // 🔔 Update navbar instantly
-    window.dispatchEvent(new Event("userUpdated"));
-
-    // 🚀 Redirect
-    router.push("/account");
   };
 
   return (
@@ -58,12 +82,11 @@ export default function Login() {
       <form className="auth-card" onSubmit={handleLogin}>
         
         <h2>Welcome Back</h2>
-        <p className="subtitle">Login to your account</p>
+        <p className="subtitle">Login with your phone number</p>
 
         <input
-          name="email"
-          type="email"
-          placeholder="Email Address"
+          name="phone"
+          placeholder="Phone (07XXXXXXXX)"
           onChange={handleChange}
           required
         />
@@ -76,11 +99,15 @@ export default function Login() {
           required
         />
 
-        <button type="submit">LOGIN</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "LOGIN"}
+        </button>
 
         <p className="switch">
-          Don’t have an account? <Link href="/auth/signup">Sign up</Link>
+          Don’t have an account?{" "}
+          <Link href="/auth/signup">Sign up</Link>
         </p>
+
       </form>
     </div>
   );
