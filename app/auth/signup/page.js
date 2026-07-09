@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { supabase } from "../../../lib/supabase";
+import bcrypt from "bcryptjs";
 
 export default function Signup() {
   const router = useRouter();
@@ -21,7 +23,7 @@ export default function Signup() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (form.password !== form.confirmPassword) {
@@ -29,13 +31,37 @@ export default function Signup() {
       return;
     }
 
-    const userData = {
-      name: form.firstName + " " + form.lastName,
-      email: form.email
-    };
+    // 🔐 HASH PASSWORD
+    const hashedPassword = await bcrypt.hash(form.password, 10);
 
-    localStorage.setItem("user", JSON.stringify(userData));
+    // 💾 SAVE TO DATABASE
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          first_name: form.firstName,
+          middle_name: form.middleName,
+          last_name: form.lastName,
+          phone_number: form.phone,
+          email: form.email,
+          password: hashedPassword
+        }
+      ])
+      .select()
+      .single();
 
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    // ✅ SAVE SESSION
+    localStorage.setItem("user", JSON.stringify(data));
+
+    // 🔔 UPDATE NAVBAR
+    window.dispatchEvent(new Event("userUpdated"));
+
+    // 🚀 REDIRECT
     router.push("/account");
   };
 
