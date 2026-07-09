@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 export default function Login() {
   const router = useRouter();
@@ -16,21 +17,40 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (!storedUser) {
-      alert("No account found. Please sign up.");
+    if (!form.email || !form.password) {
+      alert("Enter email and password");
       return;
     }
 
-    if (form.email === storedUser.email) {
-      router.push("/account");
-    } else {
-      alert("Invalid email");
+    // 🔍 Get user from database
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", form.email)
+      .single();
+
+    if (error || !data) {
+      alert("User not found");
+      return;
     }
+
+    // 🔐 Check password
+    if (data.password !== form.password) {
+      alert("Incorrect password");
+      return;
+    }
+
+    // ✅ Save session locally
+    localStorage.setItem("user", JSON.stringify(data));
+
+    // 🔔 Update navbar instantly
+    window.dispatchEvent(new Event("userUpdated"));
+
+    // 🚀 Redirect
+    router.push("/account");
   };
 
   return (
@@ -64,4 +84,4 @@ export default function Login() {
       </form>
     </div>
   );
-    }
+            }
