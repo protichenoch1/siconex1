@@ -365,106 +365,105 @@ body {
   font-size: 12px;  
   margin-bottom: 2px;  
 }  
-  
-/* ================= AUTH PAGE (FIXED CLEAN) ================= */
+  /* ================= AUTH PAGE (PROFESSIONAL) ================= */
 
 .auth-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* prevents vertical squash */
-  padding: 30px 20px;
+  align-items: center;
+  background: #f6f8fb;
+  padding: 20px;
 }
 
 /* CARD */
 .auth-card {
   width: 100%;
-  max-width: 400px;
-  background: #fff;
-  padding: 22px;
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  max-width: 420px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
 }
 
 /* TITLE */
 .auth-card h2 {
+  font-size: 22px;
   margin-bottom: 6px;
-  font-size: 20px;
   color: #111;
 }
 
 /* SUBTEXT */
 .subtitle {
-  color: #777;
   font-size: 13px;
-  margin-bottom: 18px;
+  color: #666;
+  margin-bottom: 20px;
 }
 
 /* INPUTS */
 .auth-card input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 12px; /* improved spacing */
+  padding: 13px;
+  margin-bottom: 14px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
-  transition: border 0.2s ease;
+  background: #fafafa;
+  transition: all 0.2s ease;
 }
 
 .auth-card input:focus {
   outline: none;
   border-color: #0a8f3c;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(10,143,60,0.08);
 }
 
 /* PRIMARY BUTTON */
 .auth-card button {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   background: #0a8f3c;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-weight: bold;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
   margin-top: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .auth-card button:hover {
-  background: #087a32;
+  background: #087532;
 }
 
-/* FOOTER (LOGIN/SWITCH AREA) */
+/* FOOTER */
 .auth-footer {
-  margin-top: 18px;
+  margin-top: 20px;
   text-align: center;
 }
 
 .auth-footer p {
   font-size: 13px;
   color: #666;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-/* SECONDARY BUTTON (LOGIN) */
+/* LOGIN LINK BUTTON */
 .secondary-btn {
+  display: block;
   width: 100%;
-  padding: 10px;
-  background: #f2f2f2;
+  padding: 11px;
+  background: #f1f3f5;
   color: #111;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
 }
 
-/* SMALL LINK TEXT (optional) */
-.switch {
-  margin-top: 12px;
-  font-size: 13px;
-  text-align: center;
-  }  
-.switch {  
-  margin-top: 15px;  
-  font-size: 14px;  
-  text-align: center;  
-                                }
+.secondary-btn:hover {
+  background: #e2e6ea;
+}
