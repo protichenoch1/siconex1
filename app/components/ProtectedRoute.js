@@ -11,7 +11,7 @@ export default function ProtectedRoute({ children }) {
     const user = localStorage.getItem("user");
 
     if (!user) {
-      router.push("/login"); // redirect if not logged in
+      router.push("/auth/start"); // ✅ correct route
     } else {
       setLoading(false);
     }
