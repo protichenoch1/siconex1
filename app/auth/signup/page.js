@@ -80,10 +80,10 @@ export default function Signup() {
 
         <div className="auth-footer">
   <p>Already have an account?</p>
-  <Link href="/auth/login">
-    <button type="button" className="secondary-btn">
-      LOGIN HERE
-    </button>
+  <Link href="/auth/login" className="secondary-btn">
+    LOGIN HERE
+  </Link>
+</div>
   </Link>
 </div>
       </form>
