@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getCartCount } from "../lib/cart";
 
 export default function Navbar() {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const updateCart = () => setCount(getCartCount());
@@ -30,6 +32,14 @@ export default function Navbar() {
     };
   }, []);
 
+  const handleAccountClick = () => {
+    if (user) {
+      router.push("/account");
+    } else {
+      router.push("/auth/start");
+    }
+  };
+
   return (
     <div className="header">
       
@@ -42,7 +52,11 @@ export default function Navbar() {
         <div className="nav-right">
 
           {/* ACCOUNT */}
-          <Link href="/account" className="icon">
+          <div
+            className="icon"
+            onClick={handleAccountClick}
+            style={{ cursor: "pointer" }}
+          >
             {user ? (
               <div style={{
                 width: "28px",
@@ -64,7 +78,7 @@ export default function Navbar() {
                 <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#0a8f3c" strokeWidth="2"/>
               </svg>
             )}
-          </Link>
+          </div>
 
           {/* CART */}
           <Link href="/cart" className="icon" style={{ position: "relative" }}>
