@@ -27,12 +27,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white; /* ✅ changed */
+  background: white;
   padding: 12px 15px;
   border-bottom: 1px solid #eee;
 }
 
-/* LEFT */
 .nav-left {
   display: flex;
   align-items: center;
@@ -41,28 +40,26 @@ body {
 
 .menu {
   font-size: 22px;
-  color: #0a8f3c; /* ✅ green */
+  color: #0a8f3c;
   cursor: pointer;
 }
 
 .logo {
   font-size: 35px;
   font-weight: bold;
-  color: #0a8f3c; /* ✅ green */
+  color: #0a8f3c;
   letter-spacing: 1px;
 }
 
-/* RIGHT */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-/* ICONS (WHITE BACKGROUND + GREEN ICON) */
 .icon {
   background: #f5f5f5;
-  color: #0a8f3c; /* ✅ green */
+  color: #0a8f3c;
   padding: 6px 8px;
   border-radius: 6px;
   font-size: 18px;
@@ -75,7 +72,7 @@ body {
   display: flex;
   gap: 8px;
   padding: 10px 15px 15px;
-  background: white; /* ✅ changed */
+  background: white;
   border-bottom: 1px solid #eee;
 }
 
@@ -89,7 +86,7 @@ body {
 }
 
 .search-bar button {
-  background: #0a8f3c; /* ✅ green button */
+  background: #0a8f3c;
   border: none;
   padding: 10px 14px;
   border-radius: 6px;
@@ -144,57 +141,47 @@ body {
 /* ================= CARD ================= */
 
 .card {
+  position: relative;
   background: #fff;
   padding: 12px;
   border-radius: 10px;
   text-align: left;
   cursor: pointer;
-
-  /* smoother animation */
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-
-  /* cleaner shadow */
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-
   display: flex;
   flex-direction: column;
 }
 
-/* hover (desktop feel) */
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
 
-/* tap feel (mobile) */
 .card:active {
   transform: scale(0.98);
 }
 
-/* IMAGE */
 .card img {
   width: 100%;
-  height: 140px; /* slightly bigger */
+  height: 140px;
   object-fit: contain;
   border-radius: 8px;
   margin-bottom: 8px;
-  background: #f7f7f7; /* fixes empty image look */
+  background: #f7f7f7;
 }
 
-/* TITLE */
 .card h3 {
   font-size: 14px;
   margin-bottom: 6px;
   color: #222;
   line-height: 1.3;
-
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* PRICE */
 .price {
   font-weight: bold;
   color: #0a8f3c;
@@ -202,7 +189,6 @@ body {
   font-size: 15px;
 }
 
-/* BUTTON */
 .card button {
   width: 100%;
   padding: 9px;
@@ -212,7 +198,6 @@ body {
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
-
   transition: background 0.2s ease;
 }
 
@@ -220,12 +205,25 @@ body {
   background: #087532;
 }
 
-/* ================= MOBILE ================= */
+/* BADGES */
 
-@media (max-width: 400px) {
-  .logo {
-    font-size: 22px;
-  }
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #ff3b30;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 12px;
 }
 
 /* ================= SLIDER ================= */
@@ -237,141 +235,33 @@ body {
   margin-bottom: 15px;
 }
 
-/* FIXED */
 .slides {
   display: flex;
-  width: 100%; /* ❌ remove 300% */
-}
-
-/* FIXED */
-.slides img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover; /* ✅ shows full image */
-  background: #fff;    /* optional (clean look) */
-  flex: 0 0 100%;
-}
-
-/* ANIMATION */
-@keyframes slide {
-  0%, 20%   { transform: translateX(0%); }
-  25%, 45%  { transform: translateX(-100%); }
-  50%, 70%  { transform: translateX(-200%); }
-  75%, 100% { transform: translateX(0%); }
-}
-
-/* APPLY ANIMATION */
-.slides {
   animation: slide 12s infinite;
 }
 
-/* ================= HOT DEALS BANNER ================= */
-
-/* HOT DEALS TITLE */
-.hot-title {
-  background: #0a8f3c;
-  color: white;
-  padding: 10px;
-  font-weight: bold;
-}
-
-/* SLIDER */
-.hot-deals {
-  display: flex;
-  overflow-x: auto;
-  gap: 12px;
-  padding: 10px;
-
-  background: #fff; /* ✅ THIS is what you want */
-}
-
-/* IMPORTANT: makes cards same size as your grid */
-.hot-deals .card {
-  flex: 0 0 48%;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-/* PAGE WRAPPER */
-.product-page {
-  padding-bottom: 70px; /* space for sticky button */
-}
-
-/* CONTENT */
-.product-content img {
+.slides img {
   width: 100%;
-  border-radius: 10px;
+  height: 150px;
+  object-fit: cover;
+  flex: 0 0 100%;
 }
 
-.product-content h2 {
-  margin-top: 10px;
+@keyframes slide {
+  0%, 20% { transform: translateX(0%); }
+  25%, 45% { transform: translateX(-100%); }
+  50%, 70% { transform: translateX(-200%); }
+  75%, 100% { transform: translateX(0%); }
 }
 
-/* STICKY BAR */
-.sticky-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+/* ================= AUTH PAGE (UPGRADED) ================= */
 
-  background: white;
-  padding: 10px;
-  border-top: 1px solid #eee;
-
-  z-index: 1000;
-}
-
-/* BUTTON */
-.sticky-bar button {
-  width: 100%;
-  padding: 14px;
-  background: #0a8f3c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-/* make card relative so badge can position inside */
-.card {
-  position: relative;
-}
-
-/* discount badge */
-.badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-
-  background: #ff3b30;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-
-  padding: 4px 6px;
-  border-radius: 4px;
-
-  z-index: 2;
-}
-
-.old-price {
-  text-decoration: line-through;
-  color: #888;
-  font-size: 12px;
-  margin-bottom: 2px;
-}
-
-/* AUTH PAGE */
 .auth-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
+  align-items: flex-start;
+  padding: 20px 15px;
+  margin-top: 10px;
 }
 
 .auth-card {
@@ -379,26 +269,27 @@ body {
   max-width: 400px;
   background: #fff;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 .auth-card h2 {
+  font-size: 22px;
   margin-bottom: 5px;
 }
 
 .subtitle {
-  color: #777;
+  color: #666;
   font-size: 14px;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 
 .auth-card input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
+  padding: 13px;
+  margin-bottom: 12px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
 }
 
@@ -409,11 +300,11 @@ body {
 
 .auth-card button {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   background: #0a8f3c;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: bold;
   margin-top: 10px;
   cursor: pointer;
@@ -423,8 +314,25 @@ body {
   background: #087a32;
 }
 
-.switch {
-  margin-top: 15px;
-  font-size: 14px;
+/* LOGIN FOOTER */
+
+.auth-footer {
+  margin-top: 18px;
   text-align: center;
+}
+
+.auth-footer p {
+  font-size: 14px;
+  color: #666;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 11px;
+  margin-top: 8px;
+  background: #f1f5f9;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
   }
