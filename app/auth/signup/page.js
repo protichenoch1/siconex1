@@ -62,31 +62,30 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-container">
-      <form className="auth-card" onSubmit={handleSignup}>
-        
-        <h2>Create Account</h2>
-        <p className="subtitle">Sign up to continue</p>
+  <div className="auth-container">
+    <form className="auth-card" onSubmit={handleSignup}>
+      
+      <h2>Create Account</h2>
+      <p className="subtitle">Sign up to continue</p>
 
-        <input name="firstName" placeholder="First Name" onChange={handleChange} required />
-        <input name="middleName" placeholder="Middle Name (optional)" onChange={handleChange} />
-        <input name="lastName" placeholder="Last Name" onChange={handleChange} required />
-        <input name="phone" placeholder="Phone Number" onChange={handleChange} required />
-        <input name="email" type="email" placeholder="Email Address" onChange={handleChange} required />
-        <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-        <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} required />
+      <input name="firstName" placeholder="First Name" onChange={handleChange} required />
+      <input name="middleName" placeholder="Middle Name (optional)" onChange={handleChange} />
+      <input name="lastName" placeholder="Last Name" onChange={handleChange} required />
+      <input name="phone" placeholder="Phone Number" onChange={handleChange} required />
+      <input name="email" type="email" placeholder="Email Address" onChange={handleChange} required />
+      <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
+      <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} required />
 
-        <button type="submit">CREATE ACCOUNT</button>
+      <button type="submit">CREATE ACCOUNT</button>
 
-        <div className="auth-footer">
-  <p>Already have an account?</p>
-  <Link href="/auth/login" className="secondary-btn">
-    LOGIN HERE
-  </Link>
-</div>
-  </Link>
-</div>
-      </form>
-    </div>
-  );
+      <div className="auth-footer">
+        <p>Already have an account?</p>
+        <Link href="/auth/login" className="secondary-btn">
+          LOGIN HERE
+        </Link>
+      </div>
+
+    </form>
+  </div>
+);
     }
