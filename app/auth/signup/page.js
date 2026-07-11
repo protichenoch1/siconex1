@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { supabase } from "../../../lib/supabase";
 
 export default function Signup() {
   const router = useRouter();
@@ -18,14 +17,13 @@ export default function Signup() {
     confirmPassword: ""
   });
 
-  const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSignup = async (e) => {
+  const handleContinue = (e) => {
     e.preventDefault();
     setErrorMsg("");
 
@@ -34,42 +32,16 @@ export default function Signup() {
       return;
     }
 
-    setLoading(true);
+    // Save step 1 data
+    localStorage.setItem("signupData", JSON.stringify(form));
 
-    const { data, error } = await supabase
-      .from("users")
-      .insert([
-        {
-          first_name: form.firstName,
-          middle_name: form.middleName,
-          last_name: form.lastName,
-          phone_number: form.phone,
-          email: form.email,
-          password: form.password
-        }
-      ])
-      .select()
-      .single();
-
-    if (error) {
-      setErrorMsg(error.message);
-      setLoading(false);
-      return;
-    }
-
-    // Save session
-    localStorage.setItem("user", JSON.stringify(data));
-
-    // Update navbar
-    window.dispatchEvent(new Event("userUpdated"));
-
-    // Redirect
-    router.push("/account");
+    // Redirect to address page
+    router.push("/auth/signup/address");
   };
 
   return (
     <div className="auth-container">
-      <form className="auth-card" onSubmit={handleSignup}>
+      <form className="auth-card" onSubmit={handleContinue}>
         
         <h2>Create Account</h2>
         <p className="subtitle">Sign up to continue</p>
@@ -84,9 +56,7 @@ export default function Signup() {
         <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
         <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} required />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Please wait..." : "CREATE ACCOUNT"}
-        </button>
+        <button type="submit">CONTINUE</button>
 
         <div className="auth-footer">
           <p>Already have an account?</p>
@@ -98,4 +68,4 @@ export default function Signup() {
       </form>
     </div>
   );
-          }
+    }
