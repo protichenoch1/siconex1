@@ -36,7 +36,7 @@ export default function Navbar() {
     if (user) {
       router.push("/account");
     } else {
-      router.push("/auth/start");
+      router.push("/auth/signup");
     }
   };
 
