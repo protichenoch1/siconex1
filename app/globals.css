@@ -467,3 +467,40 @@ body {
 .secondary-btn:hover {
   background: #e2e6ea;
 }
+
+.select-group {
+  position: relative;
+  width: 100%;
+}
+
+.select-group select {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 14px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.select-group select:focus {
+  border-color: #000;
+}
+
+.select-group select:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.select-group .arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
+  color: #555;
+}
