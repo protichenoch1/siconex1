@@ -22,7 +22,22 @@ export default function AccountPage() {
   const logout = () => {
     localStorage.removeItem("user");
     setUser(null);
+
+    // notify navbar or other components
+    window.dispatchEvent(new Event("userUpdated"));
+
+    // redirect
+    router.push("/");
   };
+
+  const menuItems = [
+    { label: "My Orders", path: "/orders" },
+    { label: "Saved Items", path: "/saved" },
+    { label: "My Details", path: "/account/details" },
+    { label: "Address Book", path: "/account/address" },
+    { label: "Payment Methods", path: "/account/payment" },
+    { label: "Help Center", path: "/help" },
+  ];
 
   // ❌ NOT LOGGED IN
   if (!user) {
@@ -30,12 +45,14 @@ export default function AccountPage() {
       <div style={{ padding: 20 }}>
         <h2>My Account</h2>
 
-        <div style={{
-          background: "#fff",
-          padding: 20,
-          borderRadius: 10,
-          textAlign: "center"
-        }}>
+        <div
+          style={{
+            background: "#fff",
+            padding: 20,
+            borderRadius: 10,
+            textAlign: "center",
+          }}
+        >
           <p>Welcome! Please sign in</p>
 
           <button
@@ -46,7 +63,8 @@ export default function AccountPage() {
               background: "#f68b1e",
               color: "#fff",
               border: "none",
-              marginTop: 10
+              marginTop: 10,
+              cursor: "pointer",
             }}
           >
             LOGIN
@@ -57,7 +75,8 @@ export default function AccountPage() {
             style={{
               width: "100%",
               padding: 12,
-              marginTop: 10
+              marginTop: 10,
+              cursor: "pointer",
             }}
           >
             CREATE ACCOUNT
@@ -72,38 +91,55 @@ export default function AccountPage() {
     <div style={{ padding: 20 }}>
       <h2>My Account</h2>
 
-      <div style={{
-        background: "#fff",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15
-      }}>
-        <p><strong>{user.first_name} {user.last_name}</strong></p>
+      {/* USER INFO */}
+      <div
+        style={{
+          background: "#fff",
+          padding: 15,
+          borderRadius: 10,
+          marginBottom: 15,
+        }}
+      >
+        <p>
+          <strong>
+            {user.first_name} {user.last_name}
+          </strong>
+        </p>
         <p>{user.email}</p>
         <p>{user.phone}</p>
       </div>
 
-      <div style={{ background: "#fff", borderRadius: 10 }}>
-        {[
-          "My Orders",
-          "Saved Items",
-          "My Details",
-          "Address Book",
-          "Payment Methods",
-          "Help Center"
-        ].map((item, i) => (
+      {/* MENU */}
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: 10,
+          overflow: "hidden",
+        }}
+      >
+        {menuItems.map((item, i) => (
           <div
             key={i}
+            onClick={() => router.push(item.path)}
             style={{
               padding: 15,
-              borderBottom: "1px solid #eee"
+              borderBottom: "1px solid #eee",
+              cursor: "pointer",
+              transition: "0.2s",
             }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = "#f5f5f5")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background = "#fff")
+            }
           >
-            {item}
+            {item.label}
           </div>
         ))}
       </div>
 
+      {/* LOGOUT */}
       <button
         onClick={logout}
         style={{
@@ -112,11 +148,13 @@ export default function AccountPage() {
           padding: 12,
           background: "#e53935",
           color: "#fff",
-          border: "none"
+          border: "none",
+          cursor: "pointer",
+          borderRadius: 6,
         }}
       >
         LOGOUT
       </button>
     </div>
   );
-    }
+              }
