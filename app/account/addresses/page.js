@@ -311,7 +311,9 @@ const overlay = {
   background: "rgba(0,0,0,0.4)",
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-start", // ✅ move modal down
+  paddingTop: "60px",       // ✅ space from top (fix cut-off)
+  overflowY: "auto",        // ✅ allow scroll
 };
 
 const modal = {
@@ -320,6 +322,7 @@ const modal = {
   borderRadius: "8px",
   width: "90%",
   maxWidth: "400px",
+  marginBottom: "40px",     // ✅ bottom spacing for scroll
 };
 
 const labelStyle = {
