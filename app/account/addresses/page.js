@@ -6,37 +6,95 @@ export default function AddressPage() {
   const [addresses, setAddresses] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
-  const [form, setForm] = useState({
+  const emptyForm = {
     id: null,
     name: "",
     phone: "",
-    city: "",
-    location: "",
+    county: "",
+    subCounty: "",
+    town: "",
+    addressLine: "",
+    postal: "",
     isDefault: false,
-  });
+  };
 
-  // Load addresses
+  const [form, setForm] = useState(emptyForm);
+
+  // ✅ LOAD + MIGRATE FROM SIGNUP
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("addresses")) || [];
-    setAddresses(saved);
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+    if (!savedUser) return;
+
+    if (savedUser.addresses) {
+      setAddresses(savedUser.addresses);
+    } else {
+      const migrated = [
+        {
+          id: crypto.randomUUID(),
+          name: savedUser.first_name + " " + savedUser.last_name,
+          phone: savedUser.phone_number,
+          county: savedUser.county,
+          subCounty: savedUser.sub_county,
+          town: savedUser.town,
+          addressLine: savedUser.address_line,
+          postal: savedUser.postal_code,
+          isDefault: true,
+        },
+      ];
+
+      setAddresses(migrated);
+
+      const updatedUser = {
+        ...savedUser,
+        addresses: migrated,
+      };
+
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    }
   }, []);
 
-  // Save to storage
+  // ✅ SAVE TO USER
   const saveToStorage = (data) => {
-    localStorage.setItem("addresses", JSON.stringify(data));
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+
+    const updatedUser = {
+      ...savedUser,
+      addresses: data,
+    };
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
     setAddresses(data);
+
+    window.dispatchEvent(new Event("userUpdated"));
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   };
 
-  // Add or update address
+  // ✅ VALIDATION
+  const isValid = () => {
+    return (
+      form.name &&
+      form.phone &&
+      form.county &&
+      form.subCounty &&
+      form.town &&
+      form.addressLine
+    );
+  };
+
+  // ✅ ADD / UPDATE
   const saveAddress = () => {
+    if (!isValid()) {
+      alert("Please fill all fields");
+      return;
+    }
+
     let updated = [...addresses];
 
     if (form.isDefault) {
@@ -45,10 +103,14 @@ export default function AddressPage() {
 
     if (form.id) {
       updated = updated.map((a) =>
-        a.id === form.id ? form : a
+        a.id === form.id ? { ...form } : a
       );
     } else {
-      updated.push({ ...form, id: Date.now() });
+      updated.push({
+        ...form,
+        id: crypto.randomUUID(),
+        isDefault: updated.length === 0 || form.isDefault,
+      });
     }
 
     saveToStorage(updated);
@@ -56,12 +118,17 @@ export default function AddressPage() {
   };
 
   const editAddress = (addr) => {
-    setForm(addr);
+    setForm({ ...addr });
     setShowForm(true);
   };
 
   const deleteAddress = (id) => {
-    const updated = addresses.filter((a) => a.id !== id);
+    let updated = addresses.filter((a) => a.id !== id);
+
+    if (!updated.some((a) => a.isDefault) && updated.length > 0) {
+      updated[0].isDefault = true;
+    }
+
     saveToStorage(updated);
   };
 
@@ -74,14 +141,7 @@ export default function AddressPage() {
   };
 
   const resetForm = () => {
-    setForm({
-      id: null,
-      name: "",
-      phone: "",
-      city: "",
-      location: "",
-      isDefault: false,
-    });
+    setForm(emptyForm);
     setShowForm(false);
   };
 
@@ -98,29 +158,31 @@ export default function AddressPage() {
         </button>
       </div>
 
-      {/* ADDRESS LIST */}
+      {/* LIST */}
       {addresses.length === 0 ? (
         <div style={empty}>No saved addresses</div>
       ) : (
         addresses.map((addr) => (
           <div key={addr.id} style={card}>
-            
             <div style={{ fontWeight: "600" }}>{addr.name}</div>
             <div style={text}>{addr.phone}</div>
-            <div style={text}>{addr.city}</div>
-            <div style={text}>{addr.location}</div>
+            <div style={text}>{addr.county}</div>
+            <div style={text}>{addr.subCounty}</div>
+            <div style={text}>{addr.town}</div>
+            <div style={text}>{addr.addressLine}</div>
+            <div style={text}>{addr.postal}</div>
 
-            {addr.isDefault && (
-              <div style={defaultTag}>Default</div>
-            )}
+            {addr.isDefault && <div style={defaultTag}>Default</div>}
 
             <div style={{ marginTop: "10px" }}>
               <button onClick={() => editAddress(addr)} style={smallBtn}>
                 Edit
               </button>
+
               <button onClick={() => deleteAddress(addr.id)} style={smallBtn}>
                 Delete
               </button>
+
               {!addr.isDefault && (
                 <button onClick={() => setDefault(addr.id)} style={smallBtn}>
                   Set Default
@@ -131,17 +193,20 @@ export default function AddressPage() {
         ))
       )}
 
-      {/* FORM MODAL */}
+      {/* MODAL */}
       {showForm && (
-        <div style={overlay}>
-          <div style={modal}>
+        <div style={overlay} onClick={resetForm}>
+          <div style={modal} onClick={(e) => e.stopPropagation()}>
             
             <h3>{form.id ? "Edit Address" : "New Address"}</h3>
 
             <Input label="Full Name" name="name" value={form.name} onChange={handleChange} />
             <Input label="Phone" name="phone" value={form.phone} onChange={handleChange} />
-            <Input label="City" name="city" value={form.city} onChange={handleChange} />
-            <Input label="Location (Street / Area)" name="location" value={form.location} onChange={handleChange} />
+            <Input label="County" name="county" value={form.county} onChange={handleChange} />
+            <Input label="Sub County" name="subCounty" value={form.subCounty} onChange={handleChange} />
+            <Input label="Town" name="town" value={form.town} onChange={handleChange} />
+            <Input label="Address Line" name="addressLine" value={form.addressLine} onChange={handleChange} />
+            <Input label="Postal Code" name="postal" value={form.postal} onChange={handleChange} />
 
             <div style={{ margin: "10px 0" }}>
               <label>
@@ -155,8 +220,14 @@ export default function AddressPage() {
               </label>
             </div>
 
-            <button onClick={saveAddress} style={btn}>Save</button>
-            <button onClick={resetForm} style={{ ...btn, background: "#999" }}>
+            <button onClick={saveAddress} style={btn}>
+              {form.id ? "Update" : "Save"}
+            </button>
+
+            <button
+              onClick={resetForm}
+              style={{ ...btn, background: "#999", marginTop: 8 }}
+            >
               Cancel
             </button>
           </div>
@@ -166,17 +237,17 @@ export default function AddressPage() {
   );
 }
 
-// 🔹 Input
+// INPUT
 function Input({ label, name, value, onChange }) {
   return (
     <div style={{ marginBottom: "10px" }}>
-      <label style={label}>{label}</label>
+      <label style={labelStyle}>{label}</label>
       <input name={name} value={value} onChange={onChange} style={input} />
     </div>
   );
 }
 
-// styles
+// STYLES
 const header = {
   background: "#0a8f3c",
   color: "#fff",
@@ -251,7 +322,7 @@ const modal = {
   maxWidth: "400px",
 };
 
-const label = {
+const labelStyle = {
   fontSize: "13px",
 };
 
