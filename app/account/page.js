@@ -34,7 +34,7 @@ export default function AccountPage() {
     { label: "My Orders", path: "/orders" },
     { label: "Saved Items", path: "/saved" },
     { label: "My Details", path: "/account/details" },
-    { label: "Address Book", path: "/account/address" },
+    { label: "Address Book", path: "/account/addresses" },
     { label: "Payment Methods", path: "/account/payment" },
     { label: "Help Center", path: "/help" },
   ];
