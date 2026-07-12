@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "@/lib/supabase";
+import { locations } from "@/lib/locations";
 
 export default function Signup() {
   const router = useRouter();
@@ -16,14 +17,24 @@ export default function Signup() {
     email: "",
     password: "",
     confirmPassword: "",
-    country: "",
-    city: "",
+    county: "",
+    subCounty: "",
+    town: "",
     address: "",
     postal: ""
   });
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // 🔹 Get selected county + sub counties
+  const selectedCounty = locations.find(
+    (c) => c.id == form.county
+  );
+
+  const subCounties = selectedCounty
+    ? selectedCounty.subCounties
+    : [];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -33,13 +44,18 @@ export default function Signup() {
     e.preventDefault();
     setErrorMsg("");
 
+    // ✅ Validation
     if (form.password !== form.confirmPassword) {
-      setErrorMsg("Passwords do not match");
-      return;
+      return setErrorMsg("Passwords do not match");
+    }
+
+    if (!form.county || !form.subCounty || !form.town) {
+      return setErrorMsg("Please complete your address");
     }
 
     setLoading(true);
 
+    // ✅ Insert into Supabase
     const { data, error } = await supabase
       .from("users")
       .insert([
@@ -49,10 +65,12 @@ export default function Signup() {
           last_name: form.lastName,
           phone_number: form.phone,
           email: form.email,
-          password: form.password,
-          country: form.country,
-          city: form.city,
-          address: form.address,
+          password: form.password, // ⚠️ still plain (can upgrade later)
+
+          county: selectedCounty?.name,
+          sub_county: form.subCounty,
+          town: form.town,
+          address_line: form.address,
           postal_code: form.postal
         }
       ])
@@ -65,11 +83,12 @@ export default function Signup() {
       return;
     }
 
-    // Save session
+    // ✅ Save session
     localStorage.setItem("user", JSON.stringify(data));
+    localStorage.setItem("isLoggedIn", "true");
     window.dispatchEvent(new Event("userUpdated"));
 
-    // Redirect
+    // ✅ Redirect
     router.push("/account");
   };
 
@@ -94,15 +113,74 @@ export default function Signup() {
         <input name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} required />
 
         {/* ADDRESS */}
-        <input name="country" placeholder="Country" onChange={handleChange} required />
-        <input name="city" placeholder="City" onChange={handleChange} required />
-        <input name="address" placeholder="Address Line" onChange={handleChange} required />
-        <input name="postal" placeholder="Postal Code (optional)" onChange={handleChange} />
+        <h3>Address</h3>
 
+        {/* COUNTY */}
+        <select
+          name="county"
+          value={form.county}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              county: e.target.value,
+              subCounty: ""
+            })
+          }
+          required
+        >
+          <option value="">Select County</option>
+          {locations.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+
+        {/* SUB COUNTY */}
+        <select
+          name="subCounty"
+          value={form.subCounty}
+          onChange={handleChange}
+          disabled={!form.county}
+          required
+        >
+          <option value="">Select Sub County</option>
+          {subCounties.map((s, i) => (
+            <option key={i} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+
+        {/* TOWN */}
+        <input
+          name="town"
+          placeholder="Town"
+          onChange={handleChange}
+          required
+        />
+
+        {/* ADDRESS LINE */}
+        <input
+          name="address"
+          placeholder="Address Line"
+          onChange={handleChange}
+          required
+        />
+
+        {/* POSTAL */}
+        <input
+          name="postal"
+          placeholder="Postal Code (optional)"
+          onChange={handleChange}
+        />
+
+        {/* BUTTON */}
         <button type="submit" disabled={loading}>
           {loading ? "Creating account..." : "CREATE ACCOUNT"}
         </button>
 
+        {/* FOOTER */}
         <div className="auth-footer">
           <p>Already have an account?</p>
           <Link href="/auth/login" className="secondary-btn">
