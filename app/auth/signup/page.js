@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import { locations } from "@/lib/locations";
+import { supabase } from "../../../lib/supabase";
+import { locations } from "../../../lib/locations";
 
 export default function Signup() {
   const router = useRouter();
