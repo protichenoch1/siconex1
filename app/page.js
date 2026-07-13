@@ -22,7 +22,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ✅ CATEGORIES */}
+      {/* ✅ CATEGORIES (IMPROVED) */}
       <div className="categories">
         {categories.map((cat) => (
           <div
@@ -30,8 +30,8 @@ export default function Home() {
             className="category"
             onClick={() => router.push(`/category/${cat.id}`)}
           >
-            <div style={{ fontSize: "22px" }}>{cat.icon}</div>
-            <div>{cat.name}</div>
+            <div className="cat-icon">{cat.icon}</div>
+            <div className="cat-name">{cat.name}</div>
           </div>
         ))}
       </div>
@@ -51,11 +51,13 @@ export default function Home() {
               <h3>{product.name}</h3>
 
               {product.oldPrice && (
-                <div style={{
-                  textDecoration: "line-through",
-                  color: "#888",
-                  fontSize: "12px"
-                }}>
+                <div
+                  style={{
+                    textDecoration: "line-through",
+                    color: "#888",
+                    fontSize: "12px",
+                  }}
+                >
                   KES {product.oldPrice.toLocaleString()}
                 </div>
               )}
@@ -105,11 +107,13 @@ export default function Home() {
               <h3>{product.name}</h3>
 
               {product.oldPrice && (
-                <div style={{
-                  textDecoration: "line-through",
-                  color: "#888",
-                  fontSize: "12px"
-                }}>
+                <div
+                  style={{
+                    textDecoration: "line-through",
+                    color: "#888",
+                    fontSize: "12px",
+                  }}
+                >
                   KES {product.oldPrice.toLocaleString()}
                 </div>
               )}
@@ -124,4 +128,4 @@ export default function Home() {
 
     </main>
   );
-                }
+}
