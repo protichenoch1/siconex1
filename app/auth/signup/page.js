@@ -27,7 +27,6 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // 🔹 Get selected county + sub counties
   const selectedCounty = locations.find(
     (c) => c.id == form.county
   );
@@ -44,7 +43,6 @@ export default function Signup() {
     e.preventDefault();
     setErrorMsg("");
 
-    // ✅ Validation
     if (form.password !== form.confirmPassword) {
       return setErrorMsg("Passwords do not match");
     }
@@ -55,36 +53,66 @@ export default function Signup() {
 
     setLoading(true);
 
-    // ✅ Insert into Supabase
-    const { data, error } = await supabase
+    // ✅ 1. Create user in Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password
+    });
+
+    if (authError) {
+      setErrorMsg(authError.message);
+      setLoading(false);
+      return;
+    }
+
+    const user = authData.user;
+
+    // ✅ 2. Insert into users table (NO address fields)
+    const { data: userData, error: userError } = await supabase
       .from("users")
       .insert([
         {
+          id: user.id,
           first_name: form.firstName,
           middle_name: form.middleName,
           last_name: form.lastName,
           phone_number: form.phone,
-          email: form.email,
-          password: form.password, // ⚠️ still plain (can upgrade later)
+          email: form.email
+        }
+      ])
+      .select()
+      .single();
 
+    if (userError) {
+      setErrorMsg(userError.message);
+      setLoading(false);
+      return;
+    }
+
+    // ✅ 3. Insert into addresses table
+    const { error: addressError } = await supabase
+      .from("addresses")
+      .insert([
+        {
+          user_id: user.id,
+          full_name: `${form.firstName} ${form.lastName}`,
+          phone: form.phone,
           county: selectedCounty?.name,
           sub_county: form.subCounty,
           town: form.town,
           address_line: form.address,
           postal_code: form.postal
         }
-      ])
-      .select()
-      .single();
+      ]);
 
-    if (error) {
-      setErrorMsg(error.message);
+    if (addressError) {
+      setErrorMsg(addressError.message);
       setLoading(false);
       return;
     }
 
-    // ✅ Save session
-    localStorage.setItem("user", JSON.stringify(data));
+    // ✅ Save session locally (optional)
+    localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("isLoggedIn", "true");
     window.dispatchEvent(new Event("userUpdated"));
 
