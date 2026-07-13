@@ -7,7 +7,9 @@ import AddToCartButton from "../../../components/AddToCartButton";
 
 export default function ProductPage() {
   const { id } = useParams();
-  const product = products.find(p => p.id === id);
+
+  // ✅ FIX: convert id to number
+  const product = products.find(p => p.id === Number(id));
 
   if (!product) return <p>Product not found</p>;
 
@@ -204,11 +206,12 @@ export default function ProductPage() {
         width: "100%",
         background: "#fff",
         borderTop: "1px solid #eee",
-        padding: "10px"
+        padding: "10px",
+        zIndex: 999
       }}>
         <AddToCartButton product={product} />
       </div>
 
     </div>
   );
-            }
+                             }
