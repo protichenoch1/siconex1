@@ -43,7 +43,7 @@ export default function Signup() {
 
     setLoading(true);
 
-    // ✅ 1. Insert user
+    // 1. Insert user
     const { data: user, error: userError } = await supabase
       .from("users")
       .insert([
@@ -65,7 +65,7 @@ export default function Signup() {
       return;
     }
 
-    // ✅ 2. Insert address
+    // 2. Insert address
     const { error: addressError } = await supabase
       .from("addresses")
       .insert([
@@ -87,47 +87,49 @@ export default function Signup() {
       return;
     }
 
-    // ✅ 3. Save login session
+    // 3. Save session (basic)
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("isLoggedIn", "true");
     window.dispatchEvent(new Event("userUpdated"));
 
-    // ✅ 4. Redirect
+    // 4. Redirect
     router.push("/account");
   };
 
   return (
-    <form onSubmit={handleSignup} className="max-w-lg mx-auto space-y-4">
-      <h2 className="text-xl font-bold">Create Account</h2>
+    <div className="auth-container">
+      <form onSubmit={handleSignup} className="auth-card">
+        <h2>Create Account</h2>
+        <p className="subtitle">Fill in your details to continue</p>
 
-      {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+        {errorMsg && <p style={{ color: "red" }}>{errorMsg}</p>}
 
-      <input name="firstName" placeholder="First Name" onChange={handleChange} required />
-      <input name="middleName" placeholder="Middle Name" onChange={handleChange} />
-      <input name="lastName" placeholder="Last Name" onChange={handleChange} required />
-      <input name="phone" placeholder="Phone" onChange={handleChange} required />
-      <input name="email" placeholder="Email" onChange={handleChange} required />
+        <input name="firstName" placeholder="First Name" onChange={handleChange} required />
+        <input name="middleName" placeholder="Middle Name" onChange={handleChange} />
+        <input name="lastName" placeholder="Last Name" onChange={handleChange} required />
+        <input name="phone" placeholder="Phone" onChange={handleChange} required />
+        <input name="email" placeholder="Email" onChange={handleChange} required />
 
-      <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-      <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required />
 
-      <hr />
+        <h3 className="subtitle" style={{ marginTop: "10px" }}>Address</h3>
 
-      <h3 className="font-semibold">Address</h3>
+        <input name="county" placeholder="County" onChange={handleChange} required />
+        <input name="subCounty" placeholder="Sub County" onChange={handleChange} required />
+        <input name="town" placeholder="Town" onChange={handleChange} required />
+        <input name="address" placeholder="Address Line" onChange={handleChange} />
+        <input name="postal" placeholder="Postal Code" onChange={handleChange} />
 
-      <input name="county" placeholder="County" onChange={handleChange} required />
-      <input name="subCounty" placeholder="Sub County" onChange={handleChange} required />
-      <input name="town" placeholder="Town" onChange={handleChange} required />
-      <input name="address" placeholder="Address Line" onChange={handleChange} />
-      <input name="postal" placeholder="Postal Code" onChange={handleChange} />
+        <button type="submit" disabled={loading}>
+          {loading ? "Creating..." : "Sign Up"}
+        </button>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="bg-black text-white px-4 py-2"
-      >
-        {loading ? "Creating..." : "Sign Up"}
-      </button>
-    </form>
+        <div className="auth-footer">
+          <p>Already have an account?</p>
+          <a href="/auth/login" className="secondary-btn">Login</a>
+        </div>
+      </form>
+    </div>
   );
-    }
+          }
