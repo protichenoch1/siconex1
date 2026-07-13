@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { products } from "../data/products";
+import { products, categories } from "../data/products";
 
 export default function Home() {
   const router = useRouter();
@@ -22,12 +22,18 @@ export default function Home() {
         </div>
       </div>
 
-      {/* CATEGORIES */}
+      {/* ✅ CATEGORIES */}
       <div className="categories">
-        <div>📱 Phones</div>
-        <div>📺 TVs</div>
-        <div>💻 Laptops</div>
-        <div>🔋 Power</div>
+        {categories.map((cat) => (
+          <div
+            key={cat.id}
+            className="category"
+            onClick={() => router.push(`/category/${cat.id}`)}
+          >
+            <div style={{ fontSize: "22px" }}>{cat.icon}</div>
+            <div>{cat.name}</div>
+          </div>
+        ))}
       </div>
 
       {/* HOT DEALS */}
@@ -35,7 +41,7 @@ export default function Home() {
         <div className="hot-title">Hot Deals</div>
 
         <div className="hot-deals">
-          {products.slice(0, 4).map(product => (
+          {products.slice(0, 4).map((product) => (
             <div
               key={product.id}
               className="card"
@@ -67,7 +73,7 @@ export default function Home() {
         <div className="hot-title">🔥 New Arrivals</div>
 
         <div className="hot-deals">
-          {products.slice(1, 5).map(product => (
+          {products.slice(1, 5).map((product) => (
             <div
               key={product.id}
               className="card"
@@ -89,7 +95,7 @@ export default function Home() {
         <div className="hot-title">All Products</div>
 
         <div className="products">
-          {products.map(product => (
+          {products.map((product) => (
             <div
               key={product.id}
               className="card"
