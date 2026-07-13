@@ -1,13 +1,13 @@
 export const categories = [
-  "phones",
-  "tv",
-  "laptops",
-  "accessories",
-  "clothes",
-  "shoes",
-  "bags",
-  "fridges",
-  "cookers"
+  { id: "phones", name: "Phones", icon: "📱" },
+  { id: "tv", name: "TVs", icon: "📺" },
+  { id: "laptops", name: "Laptops", icon: "💻" },
+  { id: "accessories", name: "Accessories", icon: "🔌" },
+  { id: "clothes", name: "Clothes", icon: "👕" },
+  { id: "shoes", name: "Shoes", icon: "👟" },
+  { id: "bags", name: "Bags", icon: "👜" },
+  { id: "fridges", name: "Fridges", icon: "🧊" },
+  { id: "cookers", name: "Cookers", icon: "🍳" }
 ];
 
 export const products = [
