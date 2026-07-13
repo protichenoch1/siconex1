@@ -123,15 +123,48 @@ body {
   margin-bottom: 15px;  
 }  
   
-.categories div {  
-  background: white;  
-  padding: 10px;  
-  border-radius: 8px;  
-  min-width: 85px;  
-  text-align: center;  
-  font-size: 12px;  
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);  
-}  
+/* ================= CATEGORIES (FIXED) ================= */
+
+.categories {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.category {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 10px;
+  min-width: 85px;
+  text-align: center;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.category:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+
+.category:active {
+  transform: scale(0.95);
+}
+
+.cat-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.cat-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
   
 /* ================= GRID ================= */  
   
